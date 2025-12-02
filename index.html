@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+        }
+        .btn {
+            padding: 14px 24px;
+            background: #0070f3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #005ac0;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn" onclick="openPage()">Open Individual Student Report</button>
+
+    <script>
+        function openPage() {
+            window.location.href = '01-individual-student.html';
+        }
+    </script>
+
+</body>
+</html>
