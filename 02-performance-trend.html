@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment AI Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFFBF5',
+                        beige: '#F7EFE5',
+                        lavender: '#C3ACD0',
+                        purple: '#674188',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FFFBF5; color: #2D3748; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(195, 172, 208, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(103, 65, 136, 0.05);
+        }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { color: #FFFBF5; background-color: #674188; }
+        .nav-link.active { background-color: #674188; color: #FFFBF5; font-weight: 600; }
+        .trend-up { color: #10B981; }
+        .trend-down { color: #EF4444; }
+        .trend-stable { color: #F59E0B; }
+        /* Custom Thin Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #C3ACD0; /* Lavender */
+            border-radius: 10px;
+            border: 2px solid #FFFBF5; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #674188; /* Purple */
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-purple text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-chart-line text-2xl text-lavender"></i>
+                    <h1 class="text-2xl font-bold tracking-tight">SPARK AI REPORTS</h1>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-2">
+                    <a href="01-individual-student.html" class="nav-link px-3 py-2 rounded-md text-sm">Individual Mastery</a>
+                    <a href="02-performance-trend.html" class="nav-link active px-3 py-2 rounded-md text-sm">Performance Trend</a>
+                    <a href="03-skill-gap.html" class="nav-link px-3 py-2 rounded-md text-sm">Skill Gap</a>
+                    <a href="04-cohort-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Cohort Summary</a>
+                    <a href="05-parent-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Parent Summary</a>
+                    <a href="06-holistic-dashboard.html" class="nav-link px-3 py-2 rounded-md text-sm">Holistic Dashboard</a>
+                    <a href="07-final-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Final Summary</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 space-y-8">
+        
+        <!-- 1. Header -->
+        <section>
+            <div class="glass-card rounded-xl p-8 border-l-8 border-lavender">
+                <h2 class="text-3xl font-bold text-purple mb-2">Performance-Trend / Learning Trajectory Report</h2>
+                <p class="text-gray-600">AI-Generated Time-Series Analysis of Student Development (Jan - Apr 2024)</p>
+                
+                <div class="mt-4 p-4 bg-white rounded-lg border border-lavender border-opacity-20 flex items-start gap-3">
+                    <i class="fas fa-lightbulb text-yellow-500 mt-1"></i>
+                    <p class="text-sm italic text-gray-700">
+                        "The student has shown significant improvement in technical areas, particularly Python (+26%) and Presentation skills (+17%). However, there is a recent decline in communication (-5%) due to low GD participation."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Timeline Visualization -->
+        <section>
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-purple mb-6">2. Timeline Visualization (AI Interpreted)</h3>
+                <div class="relative h-80">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-center">
+                    <div class="p-3 bg-green-50 rounded-lg">
+                        <span class="font-bold text-purple block">Jan - Feb</span>
+                        Steady improvement in technical assessments (+12%)
+                    </div>
+                    <div class="p-3 bg-red-50 rounded-lg">
+                        <span class="font-bold text-purple block">Feb - Mar</span>
+                        Drop in communication due to low GD performance (-8%)
+                    </div>
+                    <div class="p-3 bg-beige rounded-lg">
+                        <span class="font-bold text-purple block">Mar - Apr</span>
+                        Sharp improvement in coding (+25%) after practice
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Subject Level Trend Analysis -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">3. Subject-Level Trend Analysis</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-purple text-white text-sm">
+                            <tr>
+                                <th class="p-3 rounded-tl-lg">Subject / Skill</th>
+                                <th class="p-3">Start Score</th>
+                                <th class="p-3">Latest</th>
+                                <th class="p-3">Imp.</th>
+                                <th class="p-3 rounded-tr-lg">Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b border-beige">
+                                <td class="p-3 font-medium">Python</td>
+                                <td class="p-3">52%</td>
+                                <td class="p-3 font-bold">78%</td>
+                                <td class="p-3 text-green-600">+26%</td>
+                                <td class="p-3"><i class="fas fa-arrow-up trend-up"></i> Upward</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-3 font-medium">SQL/DBMS</td>
+                                <td class="p-3">68%</td>
+                                <td class="p-3 font-bold">80%</td>
+                                <td class="p-3 text-green-600">+12%</td>
+                                <td class="p-3"><i class="fas fa-minus trend-stable"></i> Stable</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-3 font-medium">Aptitude</td>
+                                <td class="p-3">45%</td>
+                                <td class="p-3 font-bold">50%</td>
+                                <td class="p-3 text-green-600">+5%</td>
+                                <td class="p-3"><i class="fas fa-arrow-up trend-up"></i> Slight Growth</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-3 font-medium">Communication</td>
+                                <td class="p-3">60%</td>
+                                <td class="p-3 font-bold">55%</td>
+                                <td class="p-3 text-red-600">-5%</td>
+                                <td class="p-3"><i class="fas fa-arrow-down trend-down"></i> Decline</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">Presentation</td>
+                                <td class="p-3">48%</td>
+                                <td class="p-3 font-bold">65%</td>
+                                <td class="p-3 text-green-600">+17%</td>
+                                <td class="p-3"><i class="fas fa-arrow-up trend-up"></i> Upward</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Right: Explanation -->
+                <div class="p-5 bg-beige rounded-lg border-l-4 border-purple h-full flex flex-col justify-center">
+                    <h4 class="font-bold text-purple mb-3">Analysis Insight</h4>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                        The student has demonstrated a <span class="font-bold text-green-600">strong upward trajectory in technical subjects</span> like Python and DBMS. The 26% jump in Python scores correlates with the introduction of project-based assignments.
+                    </p>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        However, <span class="font-bold text-red-500">Soft Skills are stagnating or declining</span>. The drop in communication scores highlights a need for more active participation in verbal assessments.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Skill Trajectory -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">4. Skill Trajectory (Python Micro-Skills)</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Explanation -->
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-lavender">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-purple">Syntax Mastery</span>
+                            <span class="text-green-600 text-xs font-bold"><i class="fas fa-arrow-up"></i> Improving</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Score: 70% &rarr; 82%</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-lavender">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-purple">Functions</span>
+                            <span class="text-green-600 text-xs font-bold"><i class="fas fa-arrow-up"></i> Improving</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Score: 50% &rarr; 70%</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-lavender">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-gray-600">OOP Concepts</span>
+                            <span class="text-yellow-600 text-xs font-bold"><i class="fas fa-minus"></i> Steady</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Score: 40% &rarr; 58%</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-lavender">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-red-500">Error Handling</span>
+                            <span class="text-gray-500 text-xs font-bold">Slow Growth</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Score: 30% &rarr; 50%</p>
+                    </div>
+                    <p class="text-sm text-gray-600 italic mt-2">"This pinpoints exactly where improvement is happening."</p>
+                </div>
+
+                <!-- Right: Chart -->
+                <div class="h-64">
+                    <canvas id="skillTrajectoryChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Interview Readiness Trend -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">5. Interview Readiness Trend</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                <!-- 1. Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-purple text-white">
+                            <tr>
+                                <th class="p-2 rounded-tl-lg">Component</th>
+                                <th class="p-2">First</th>
+                                <th class="p-2">Latest</th>
+                                <th class="p-2 rounded-tr-lg">Imp.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-beige">
+                                <td class="p-2">Technical Q&A</td>
+                                <td class="p-2">40%</td>
+                                <td class="p-2">65%</td>
+                                <td class="p-2 text-green-600">+25%</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-2">HR Answers</td>
+                                <td class="p-2">55%</td>
+                                <td class="p-2">70%</td>
+                                <td class="p-2 text-green-600">+15%</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-2">Confidence</td>
+                                <td class="p-2">Low</td>
+                                <td class="p-2">Med</td>
+                                <td class="p-2"><i class="fas fa-check text-green-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Resume</td>
+                                <td class="p-2">50%</td>
+                                <td class="p-2">75%</td>
+                                <td class="p-2 text-green-600">+25%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 2. Graph -->
+                <div class="h-48">
+                    <canvas id="interviewTrendChart"></canvas>
+                </div>
+
+                <!-- 3. Explanation -->
+                <div class="bg-white p-4 rounded-lg border border-lavender shadow-sm h-full flex items-center">
+                    <p class="text-sm text-gray-700 italic leading-relaxed">
+                        "Between Mock Interview 1 and Mock Interview 3, confidence improved by 18%, answers increased in clarity by 23%, and technical response quality improved by 25%. Resume clarity has seen a significant jump."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. GD / Communication Trend -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">6. GD / Communication Trend</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Visualization -->
+                <div class="h-64">
+                    <canvas id="gdTrendChart"></canvas>
+                </div>
+
+                <!-- Right: Content Explanation -->
+                <div class="space-y-4">
+                    <h4 class="font-bold text-purple border-b border-beige pb-2">GD Trend Summary</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="w-3 h-3 bg-red-400 rounded-full mt-1.5 mr-3 flex-shrink-0"></span>
+                            <div>
+                                <span class="font-bold text-gray-800 text-sm">Early Stage:</span>
+                                <p class="text-sm text-gray-600">Short sentences, low participation, hesitation to speak.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-3 h-3 bg-yellow-400 rounded-full mt-1.5 mr-3 flex-shrink-0"></span>
+                            <div>
+                                <span class="font-bold text-gray-800 text-sm">Mid Stage:</span>
+                                <p class="text-sm text-gray-600">Improved clarity and examples, started initiating points.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-3 h-3 bg-green-500 rounded-full mt-1.5 mr-3 flex-shrink-0"></span>
+                            <div>
+                                <span class="font-bold text-gray-800 text-sm">Latest Stage:</span>
+                                <p class="text-sm text-gray-600">Better articulation, but needs better structure and conclusion skills.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Behavioural & Effort Metrics -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">7. Behavioural & Effort-Based Indicators</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Detailed Explanation -->
+                <div class="space-y-4">
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        AI tracks effort-based metrics to gauge student sincerity and discipline.
+                    </p>
+                    <ul class="text-sm text-gray-600 list-disc pl-5 space-y-2">
+                        <li><strong>Attendance trend:</strong> Consistent improvement shows dedication.</li>
+                        <li><strong>Homework/Assignment:</strong> Reaching 100% completion indicates high effort.</li>
+                        <li><strong>Class Participation:</strong> Moving from Low to High suggests increased confidence.</li>
+                    </ul>
+                    <div class="p-3 bg-beige rounded-lg border-l-4 border-green-500 mt-4">
+                        <p class="text-xs text-gray-800 italic">"Consistent effort is a leading indicator of future success."</p>
+                    </div>
+                </div>
+
+                <!-- Right: Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-center">
+                        <thead class="bg-purple text-white">
+                            <tr>
+                                <th class="p-3 rounded-tl-lg text-left">Metric</th>
+                                <th class="p-3">Jan</th>
+                                <th class="p-3">Feb</th>
+                                <th class="p-3">Mar</th>
+                                <th class="p-3">Apr</th>
+                                <th class="p-3 rounded-tr-lg">Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="border-b border-beige">
+                                <td class="p-3 text-left font-medium">Attendance</td>
+                                <td>75%</td>
+                                <td>82%</td>
+                                <td>90%</td>
+                                <td>92%</td>
+                                <td class="text-green-600 font-bold">Improving</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-3 text-left font-medium">Assignment Completion</td>
+                                <td>60%</td>
+                                <td>70%</td>
+                                <td>95%</td>
+                                <td>100%</td>
+                                <td class="text-green-600 font-bold">Big Imp.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-left font-medium">Class Participation</td>
+                                <td>Low</td>
+                                <td>Med</td>
+                                <td>High</td>
+                                <td>High</td>
+                                <td class="text-green-600 font-bold">Improved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. AI Summary of Learning Curve -->
+        <section class="glass-card rounded-xl p-8 bg-gradient-to-r from-purple to-indigo-900 text-white">
+            <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-robot mr-3"></i>8. AI Summary of Learning Curve</h3>
+            <div class="p-6 bg-white bg-opacity-10 rounded-xl border border-white border-opacity-20 backdrop-blur-sm">
+                <p class="text-lg leading-relaxed italic">
+                    "The student has shown significant improvement in technical areas, particularly Python (+26%) and Presentation skills (+17%). Effort-based indicators such as attendance and assignments also show strong upward movement. Communication skills need focused improvement, as there is a recent decline in GD performance. With consistent practice and targeted intervention, the student is expected to reach job-readiness within 6–10 weeks."
+                </p>
+            </div>
+        </section>
+
+        <!-- 9. Prediction & Forecast -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">9. Prediction & Forecast</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Details -->
+                <div class="space-y-6">
+                    <p class="text-gray-600 text-sm">AI predicts future performance trends if current effort continues.</p>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white rounded-lg shadow-sm border-l-4 border-purple">
+                            <span class="block text-gray-500 text-xs uppercase tracking-wide">Expected Python Score</span>
+                            <span class="text-xl font-bold text-purple">82–88%</span>
+                            <span class="text-xs text-gray-400 block mt-1">(Next Month)</span>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-sm border-l-4 border-yellow-500">
+                            <span class="block text-gray-500 text-xs uppercase tracking-wide">Expected Comm. Score</span>
+                            <span class="text-xl font-bold text-gray-800">60–65%</span>
+                            <span class="text-xs text-gray-400 block mt-1">(After Intervention)</span>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-sm border-l-4 border-green-500">
+                            <span class="block text-gray-500 text-xs uppercase tracking-wide">Interview Readiness</span>
+                            <span class="text-xl font-bold text-green-600">70–75%</span>
+                            <span class="text-xs text-gray-400 block mt-1">(In 2 Months)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Visual Forecast Chart -->
+                <div class="h-64">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Recommended Actions -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">10. Recommended Actions Based on Trend</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Immediate -->
+                <div class="bg-red-50 rounded-xl p-5 border border-red-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-exclamation-circle text-red-500 text-xl"></i>
+                        <h4 class="font-bold text-red-700">Immediate</h4>
+                    </div>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-start"><i class="fas fa-check text-red-400 mt-1 mr-2"></i> Fix communication dip with daily speaking exercises</li>
+                        <li class="flex items-start"><i class="fas fa-check text-red-400 mt-1 mr-2"></i> Take 10 mock interviews in the next 1 month</li>
+                    </ul>
+                </div>
+
+                <!-- Short-Term -->
+                <div class="bg-yellow-50 rounded-xl p-5 border border-yellow-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                        <h4 class="font-bold text-yellow-700">Short-Term</h4>
+                    </div>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-start"><i class="fas fa-check text-yellow-500 mt-1 mr-2"></i> Focus on Python OOP + error handling</li>
+                        <li class="flex items-start"><i class="fas fa-check text-yellow-500 mt-1 mr-2"></i> Participate in at least 3 GDs per month</li>
+                    </ul>
+                </div>
+
+                <!-- Long-Term -->
+                <div class="bg-green-50 rounded-xl p-5 border border-green-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-road text-green-600 text-xl"></i>
+                        <h4 class="font-bold text-green-700">Long-Term</h4>
+                    </div>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2"></i> Build 2 mini-projects for placement</li>
+                        <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2"></i> Resume + LinkedIn enhancement</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-purple text-white py-6 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm opacity-80">&copy; 2025 Spark AI Learning Reports.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Timeline Chart
+        const ctxTimeline = document.getElementById('timelineChart').getContext('2d');
+        new Chart(ctxTimeline, {
+            type: 'line',
+            data: {
+                labels: ['Jan W1', 'Jan W3', 'Feb W1', 'Feb W3', 'Mar W1', 'Mar W3', 'Apr W1'],
+                datasets: [{
+                    label: 'Technical Skills',
+                    data: [50, 52, 58, 60, 62, 75, 78],
+                    borderColor: '#674188',
+                    backgroundColor: 'rgba(103, 65, 136, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Communication',
+                    data: [60, 62, 60, 58, 55, 54, 55],
+                    borderColor: '#EF4444',
+                    borderDash: [5, 5],
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } }
+            }
+        });
+
+        // 2. Skill Trajectory Chart
+        const ctxSkill = document.getElementById('skillTrajectoryChart').getContext('2d');
+        new Chart(ctxSkill, {
+            type: 'bar',
+            data: {
+                labels: ['Syntax', 'Functions', 'OOP', 'Error Handling'],
+                datasets: [{
+                    label: 'Jan Score',
+                    data: [70, 50, 40, 30],
+                    backgroundColor: '#E2E8F0',
+                    borderRadius: 4
+                }, {
+                    label: 'Apr Score',
+                    data: [82, 70, 58, 50],
+                    backgroundColor: '#C3ACD0',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: { x: { beginAtZero: true, max: 100 } }
+            }
+        });
+
+        // 3. Interview Trend Chart
+        const ctxInterview = document.getElementById('interviewTrendChart').getContext('2d');
+        new Chart(ctxInterview, {
+            type: 'line',
+            data: {
+                labels: ['Mock 1', 'Mock 2', 'Mock 3'],
+                datasets: [{
+                    label: 'Interview Readiness Score',
+                    data: [45, 55, 70],
+                    borderColor: '#10B981', // Green
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100 } }
+            }
+        });
+
+        // 4. GD Trend Chart
+        const ctxGD = document.getElementById('gdTrendChart').getContext('2d');
+        new Chart(ctxGD, {
+            type: 'bar',
+            data: {
+                labels: ['Early Stage', 'Mid Stage', 'Latest Stage'],
+                datasets: [{
+                    label: 'Clarity',
+                    data: [30, 50, 75],
+                    backgroundColor: '#C3ACD0'
+                }, {
+                    label: 'Participation',
+                    data: [20, 60, 80],
+                    backgroundColor: '#674188'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100 } }
+            }
+        });
+
+        // 5. Forecast Chart
+        const ctxForecast = document.getElementById('forecastChart').getContext('2d');
+        new Chart(ctxForecast, {
+            type: 'line',
+            data: {
+                labels: ['Month 1', 'Month 2', 'Month 3', 'Month 4 (Proj)', 'Month 5 (Proj)'],
+                datasets: [{
+                    label: 'Actual Growth',
+                    data: [50, 58, 65, null, null],
+                    borderColor: '#674188',
+                    tension: 0.4
+                }, {
+                    label: 'Projected Growth',
+                    data: [null, null, 65, 78, 88],
+                    borderColor: '#F59E0B', // Orange/Yellow
+                    borderDash: [5, 5],
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100 } }
+            }
+        });
+    </script>
+</body>
+</html>

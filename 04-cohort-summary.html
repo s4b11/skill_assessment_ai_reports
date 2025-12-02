@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment AI Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFFBF5',
+                        beige: '#F7EFE5',
+                        lavender: '#C3ACD0',
+                        purple: '#674188',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FFFBF5; color: #2D3748; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(195, 172, 208, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(103, 65, 136, 0.05);
+        }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { color: #FFFBF5; background-color: #674188; }
+        .nav-link.active { background-color: #674188; color: #FFFBF5; font-weight: 600; }
+        .heat-box { transition: transform 0.2s; }
+        .heat-box:hover { transform: scale(1.05); }
+        /* Custom Thin Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #C3ACD0; /* Lavender */
+            border-radius: 10px;
+            border: 2px solid #FFFBF5; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #674188; /* Purple */
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-purple text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-users text-2xl text-lavender"></i>
+                    <h1 class="text-2xl font-bold tracking-tight">SPARK AI REPORTS</h1>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-2">
+                    <a href="01-individual-student.html" class="nav-link px-3 py-2 rounded-md text-sm">Individual Mastery</a>
+                    <a href="02-performance-trend.html" class="nav-link px-3 py-2 rounded-md text-sm">Performance Trend</a>
+                    <a href="03-skill-gap.html" class="nav-link px-3 py-2 rounded-md text-sm">Skill Gap</a>
+                    <a href="04-cohort-summary.html" class="nav-link active px-3 py-2 rounded-md text-sm">Cohort Summary</a>
+                    <a href="05-parent-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Parent Summary</a>
+                    <a href="06-holistic-dashboard.html" class="nav-link px-3 py-2 rounded-md text-sm">Holistic Dashboard</a>
+                    <a href="07-final-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Final Summary</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 space-y-8">
+        
+        <!-- Header -->
+        <section>
+            <div class="glass-card rounded-xl p-8 border-l-8 border-lavender">
+                <h2 class="text-3xl font-bold text-purple mb-2">Cohort-Level Summary Reports</h2>
+                <p class="text-gray-600">Curriculum Improvement Focus - Analysis across all students.</p>
+            </div>
+        </section>
+
+        <!-- 1. Skill Mastery Distribution -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">1. Skill Mastery Distribution Report</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Explanation -->
+                <div class="space-y-4">
+                    <p class="text-gray-700 text-sm">Shows how many students fall into each proficiency level for every skill taught.</p>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                        <li><strong>Beginner:</strong> Concepts learned but needs practice.</li>
+                        <li><strong>Intermediate:</strong> Capable of independent problem solving.</li>
+                        <li><strong>Advanced:</strong> Industry-ready proficiency.</li>
+                    </ul>
+                    <div class="p-3 bg-beige rounded border-l-4 border-purple text-xs italic text-gray-700 mt-2">
+                        "Identifies low mastery skills → Improve training modules."
+                    </div>
+                </div>
+
+                <!-- Right: Graph -->
+                <div class="h-64">
+                    <canvas id="masteryDistChart"></canvas>
+                </div>
+            </div>
+        </section>
+            
+        <!-- 2. Weak-Area Heatmap -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">2. Weak-Area Heatmap (Cohort Difficulty Matrix)</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Heatmap Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="heat-box p-6 bg-red-200 rounded-lg text-center text-red-900 shadow-sm border border-red-300">
+                        <span class="text-3xl font-bold block mb-1">62%</span>
+                        <span class="text-sm font-semibold">Struggle with SQL Joins</span>
+                    </div>
+                    <div class="heat-box p-6 bg-red-100 rounded-lg text-center text-red-800 shadow-sm border border-red-200">
+                        <span class="text-3xl font-bold block mb-1">48%</span>
+                        <span class="text-sm font-semibold">Weak Communication</span>
+                    </div>
+                    <div class="heat-box p-6 bg-yellow-100 rounded-lg text-center text-yellow-800 shadow-sm border border-yellow-200">
+                        <span class="text-3xl font-bold block mb-1">35%</span>
+                        <span class="text-sm font-semibold">Loop Logic Issues</span>
+                    </div>
+                    <div class="heat-box p-6 bg-green-100 rounded-lg text-center text-green-800 shadow-sm border border-green-200">
+                        <span class="text-3xl font-bold block mb-1">10%</span>
+                        <span class="text-sm font-semibold">Resume Issues</span>
+                    </div>
+                </div>
+
+                <!-- Right: Details/Action -->
+                <div class="space-y-4">
+                    <h4 class="font-bold text-gray-800">Critical Gaps Identified</h4>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        A significant portion of the cohort is struggling with relational database concepts and verbal articulation. While coding logic is improving, specific syntax areas remain a bottleneck.
+                    </p>
+                    <div class="p-4 bg-white border border-lavender rounded-lg shadow-sm">
+                        <h5 class="font-bold text-purple text-sm mb-2"><i class="fas fa-tools mr-2"></i>Recommended Action</h5>
+                        <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                            <li>Add 2 revision classes for SQL Joins.</li>
+                            <li>Introduce mandatory 5-min daily speaking drills.</li>
+                            <li>Peer-review sessions for Data Structures.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Cohort Performance Trend -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">3. Cohort Performance Trend Report</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Explanation -->
+                <div class="space-y-4">
+                    <p class="text-gray-600 text-sm mb-4">Tracks the improvement of the entire cohort over time based on weekly average scores.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-2 bg-white rounded shadow-sm border-l-4 border-green-500">
+                            <span class="text-sm font-medium">Technical Growth</span>
+                            <span class="text-green-600 font-bold text-sm">+15% (Steady)</span>
+                        </div>
+                        <div class="flex items-center justify-between p-2 bg-white rounded shadow-sm border-l-4 border-red-500">
+                            <span class="text-sm font-medium">Comm. Growth</span>
+                            <span class="text-red-500 font-bold text-sm">-2% (Stagnant)</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4 italic">"Helps determine whether the training program is effective monthly."</p>
+                </div>
+
+                <!-- Right: Graph -->
+                <div class="h-64">
+                    <canvas id="cohortTrendChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Interview Readiness Score -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">4. Cohort Interview-Readiness Score Report</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Details -->
+                <div class="space-y-4">
+                    <p class="text-gray-600 text-sm">Shows how close students are to being placement-ready.</p>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex justify-between border-b border-gray-100 pb-1">
+                            <span>Avg. Communication Score</span>
+                            <span class="font-bold text-purple">6.5/10</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-100 pb-1">
+                            <span>Avg. Technical Score</span>
+                            <span class="font-bold text-purple">7.2/10</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-100 pb-1">
+                            <span>Confidence Rating</span>
+                            <span class="font-bold text-yellow-600">Medium</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right: Visual Progress Bars -->
+                <div class="space-y-5">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-bold text-green-700">Job Ready (Immediate)</span>
+                            <span class="text-sm font-bold text-green-700">42%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="bg-green-600 h-3 rounded-full shadow-sm" style="width: 42%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-bold text-yellow-600">Needs Polish (1 Month)</span>
+                            <span class="text-sm font-bold text-yellow-600">30%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="bg-yellow-500 h-3 rounded-full shadow-sm" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-bold text-red-600">At Risk (Critical Gap)</span>
+                            <span class="text-sm font-bold text-red-600">28%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="bg-red-500 h-3 rounded-full shadow-sm" style="width: 28%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Job-Role Alignment Report -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">5. Job-Role Alignment Report (Cohort to Industry Needs)</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Details -->
+                <div class="space-y-4">
+                    <p class="text-sm text-gray-600">Maps student skills to industry job role requirements to identify curriculum gaps.</p>
+                    <div class="bg-white p-4 rounded-lg border border-lavender shadow-sm">
+                        <h4 class="font-bold text-purple text-sm mb-2">Key Recommendations:</h4>
+                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-2">
+                            <li><strong>Add Cloud Module:</strong> AWS basics needed for backend roles.</li>
+                            <li><strong>Increase DSA Practice:</strong> Required for top-tier developer roles.</li>
+                            <li><strong>Resume Structure:</strong> Standardize format for better ATS parsing.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right: Visual Representation -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-purple text-white rounded-lg shadow">
+                        <span class="font-medium">Python Developer Fit</span>
+                        <span class="font-bold">65% Cohort Match</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white border border-lavender rounded-lg shadow-sm">
+                        <span class="font-medium text-gray-700">Data Analyst Fit</span>
+                        <span class="font-bold text-gray-700">40% Cohort Match</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white border border-lavender rounded-lg shadow-sm">
+                        <span class="font-medium text-gray-700">QA / Testing Fit</span>
+                        <span class="font-bold text-gray-700">75% Cohort Match</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Attendance vs Performance Correlation -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">6. Attendance vs Performance Correlation Report</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Explanation -->
+                <div class="space-y-4">
+                    <p class="text-gray-600 text-sm">Shows the direct relationship between classroom attendance and assessment outcomes.</p>
+                    <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                        <span class="block text-2xl font-bold text-red-600 mb-1">-40% Score</span>
+                        <span class="text-xs text-red-800">For students with < 70% attendance.</span>
+                    </div>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                        <li>High absenteeism in Morning Logic Sessions.</li>
+                        <li>Topic-wise drop clearly visible in weeks with low attendance.</li>
+                    </ul>
+                </div>
+
+                <!-- Right: Graph -->
+                <div class="h-64">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Engagement Analytics Report -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">7. Engagement Analytics Report</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-white rounded-xl shadow-sm border border-lavender text-center hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 text-green-600 text-xl">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-1">85%</div>
+                    <div class="text-sm text-gray-500">Assignment Completion</div>
+                </div>
+                <div class="p-6 bg-white rounded-xl shadow-sm border border-lavender text-center hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3 text-yellow-600 text-xl">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-1">60%</div>
+                    <div class="text-sm text-gray-500">Quiz Participation</div>
+                </div>
+                <div class="p-6 bg-white rounded-xl shadow-sm border border-lavender text-center hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3 text-purple text-xl">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-1">45%</div>
+                    <div class="text-sm text-gray-500">Mock Interview Rate</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8 & 9. Placement Pipeline & Behavioural Pattern -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- 8. Placement Pipeline -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-purple mb-4">8. Cohort Placement Pipeline Report</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-green-50 rounded border border-green-200">
+                        <span class="text-sm font-medium text-green-800">Strong Candidates</span>
+                        <span class="font-bold text-green-800">15 Students</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-yellow-50 rounded border border-yellow-200">
+                        <span class="text-sm font-medium text-yellow-800">Needing Improvement</span>
+                        <span class="font-bold text-yellow-800">12 Students</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-red-50 rounded border border-red-200">
+                        <span class="text-sm font-medium text-red-800">Critical Gap Areas</span>
+                        <span class="font-bold text-red-800">8 Students</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Avg. Interview Success Probability: <span class="font-bold text-purple">62%</span></p>
+                </div>
+            </div>
+
+            <!-- 9. Behavioural Pattern -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-purple mb-4">9. Behavioural / Soft-Skills Pattern Report</h3>
+                <ul class="space-y-3 text-sm text-gray-700">
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i> Teamwork & collaboration is high in projects.</li>
+                    <li class="flex items-start"><i class="fas fa-exclamation-circle text-yellow-500 mt-1 mr-2"></i> Grooming & body language needs polish.</li>
+                    <li class="flex items-start"><i class="fas fa-exclamation-circle text-yellow-500 mt-1 mr-2"></i> Problem-solving mindset is developing.</li>
+                    <li class="flex items-start"><i class="fas fa-times-circle text-red-500 mt-1 mr-2"></i> Confidence levels drop during technical Q&A.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 10. Curriculum Feedback Insights -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">10. Curriculum Feedback Insights (AI Sentiment)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-red-50 p-5 rounded-lg border border-red-100">
+                    <h4 class="font-bold text-red-600 mb-3 flex items-center"><i class="fas fa-fire mr-2"></i>Hardest Topics</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li>Advanced Recursion & Backtracking</li>
+                        <li>Dynamic Programming Concepts</li>
+                        <li>System Design Basics</li>
+                    </ul>
+                </div>
+                <div class="bg-green-50 p-5 rounded-lg border border-green-100">
+                    <h4 class="font-bold text-green-600 mb-3 flex items-center"><i class="fas fa-thumbs-up mr-2"></i>High Engagement Topics</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li>Python Mini-Projects (Games/Apps)</li>
+                        <li>SQL Query Writing Sessions</li>
+                        <li>Resume Building Workshops</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-purple text-white py-6 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm opacity-80">&copy; 2025 Spark AI Learning Reports.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Mastery Distribution Stacked Bar
+        const ctxMastery = document.getElementById('masteryDistChart').getContext('2d');
+        new Chart(ctxMastery, {
+            type: 'bar',
+            data: {
+                labels: ['OOP', 'Python', 'Comm', 'Problem Solving', 'Aptitude'],
+                datasets: [
+                    { label: 'Beginner', data: [30, 20, 40, 25, 35], backgroundColor: '#F7EFE5' }, // Beige
+                    { label: 'Intermediate', data: [50, 40, 40, 45, 40], backgroundColor: '#C3ACD0' }, // Lavender
+                    { label: 'Advanced', data: [20, 40, 20, 30, 25], backgroundColor: '#674188' } // Purple
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { x: { stacked: true }, y: { stacked: true } }
+            }
+        });
+
+        // 3. Cohort Trend Line
+        const ctxTrend = document.getElementById('cohortTrendChart').getContext('2d');
+        new Chart(ctxTrend, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+                datasets: [{
+                    label: 'Avg Batch Score',
+                    data: [55, 58, 62, 60, 68],
+                    borderColor: '#674188',
+                    backgroundColor: 'rgba(103, 65, 136, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: { 
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // 6. Attendance Correlation Chart
+        const ctxAtt = document.getElementById('attendanceChart').getContext('2d');
+        new Chart(ctxAtt, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Attendance vs Score',
+                    data: [
+                        {x: 60, y: 45}, {x: 65, y: 50}, {x: 70, y: 60}, {x: 75, y: 65},
+                        {x: 80, y: 75}, {x: 85, y: 80}, {x: 90, y: 88}, {x: 95, y: 92},
+                        {x: 50, y: 40}, {x: 100, y: 95}
+                    ],
+                    backgroundColor: '#674188'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Attendance %' } },
+                    y: { title: { display: true, text: 'Avg Score %' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment AI Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFFBF5',
+                        beige: '#F7EFE5',
+                        lavender: '#C3ACD0',
+                        purple: '#674188',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FFFBF5;
+            color: #2D3748;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(195, 172, 208, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(103, 65, 136, 0.05), 0 2px 4px -1px rgba(103, 65, 136, 0.03);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #FFFBF5;
+            background-color: #674188;
+        }
+        .nav-link.active {
+            background-color: #674188;
+            color: #FFFBF5;
+            font-weight: 600;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .mastery-bar-fill {
+            transition: width 1.5s ease-out;
+        }
+        /* Custom Thin Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #C3ACD0; /* Lavender */
+            border-radius: 10px;
+            border: 2px solid #FFFBF5; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #674188; /* Purple */
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-purple text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-brain text-2xl text-lavender"></i>
+                    <h1 class="text-2xl font-bold tracking-tight">SPARK AI REPORTS</h1>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-2">
+                    <a href="01-individual-student.html" class="nav-link active px-3 py-2 rounded-md text-sm">Individual Mastery</a>
+                    <a href="02-performance-trend.html" class="nav-link px-3 py-2 rounded-md text-sm">Performance Trend</a>
+                    <a href="03-skill-gap.html" class="nav-link px-3 py-2 rounded-md text-sm">Skill Gap</a>
+                    <a href="04-cohort-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Cohort Summary</a>
+                    <a href="05-parent-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Parent Summary</a>
+                    <a href="06-holistic-dashboard.html" class="nav-link px-3 py-2 rounded-md text-sm">Holistic Dashboard</a>
+                    <a href="07-final-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Final Summary</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 space-y-8">
+        
+        <!-- Header Section -->
+        <section class="animate-fade-in">
+            <div class="glass-card rounded-xl p-8 border-l-8 border-purple">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-purple mb-2">Individual Student Mastery / Skill-Profile Report</h2>
+                        <p class="text-gray-600">Detailed analysis of student competency across technical, academic, and soft skills.</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 text-right">
+                        <div class="text-sm text-gray-500">Overall Mastery Score</div>
+                        <div class="text-4xl font-bold text-purple">78/100</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Summary Section -->
+        <section class="animate-fade-in" style="animation-delay: 0.1s;">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Profile Card -->
+                <div class="glass-card rounded-xl p-6 col-span-1">
+                    <h3 class="text-xl font-semibold text-purple mb-4 border-b border-lavender pb-2">1. Student Summary</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Name:</span>
+                            <span class="font-medium text-purple">Alex Johnson</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Course / Class:</span>
+                            <span class="font-medium">B.Tech CS - Sem 6</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Assessment Period:</span>
+                            <span class="font-medium">Jan - Mar 2024</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Total Assessments:</span>
+                            <span class="font-medium">14</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Summary Box -->
+                <div class="glass-card rounded-xl p-6 col-span-1 md:col-span-2 bg-gradient-to-br from-white to-beige">
+                    <div class="flex items-start space-x-4">
+                        <div class="p-3 bg-purple rounded-full text-white">
+                            <i class="fas fa-robot text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-purple mb-2">AI Summary Analysis</h3>
+                            <p class="text-gray-700 leading-relaxed italic">
+                                "The student demonstrates <span class="font-bold text-purple">strong analytical thinking</span> and good technical understanding in DBMS and Python basics. However, communication clarity and confidence needs improvement. Current readiness level suggests potential for backend roles, with a need for focused effort in OOP concepts to reach full stack proficiency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Competency Categories Analyzed -->
+        <section class="animate-fade-in" style="animation-delay: 0.2s;">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-purple mb-6">2. Competency Categories Analyzed</h3>
+                
+                <!-- Row 1: Table Left, Chart Right -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 items-center">
+                    <!-- Left: Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse border border-lavender rounded-lg">
+                            <thead class="bg-purple text-white">
+                                <tr>
+                                    <th class="p-3">Competency Category</th>
+                                    <th class="p-3 text-right">Score</th>
+                                    <th class="p-3 text-right">Batch Avg</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="border-b border-beige">
+                                    <td class="p-3 font-medium">Technical Skills</td>
+                                    <td class="p-3 text-right font-bold text-purple">78%</td>
+                                    <td class="p-3 text-right text-gray-500">65%</td>
+                                </tr>
+                                <tr class="border-b border-beige">
+                                    <td class="p-3 font-medium">Academic Competency</td>
+                                    <td class="p-3 text-right font-bold text-purple">85%</td>
+                                    <td class="p-3 text-right text-gray-500">70%</td>
+                                </tr>
+                                <tr class="border-b border-beige">
+                                    <td class="p-3 font-medium">Soft Skills</td>
+                                    <td class="p-3 text-right font-bold text-purple">62%</td>
+                                    <td class="p-3 text-right text-gray-500">55%</td>
+                                </tr>
+                                <tr class="border-b border-beige">
+                                    <td class="p-3 font-medium">Interview Readiness</td>
+                                    <td class="p-3 text-right font-bold text-purple">45%</td>
+                                    <td class="p-3 text-right text-gray-500">50%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">Behavioural Skills</td>
+                                    <td class="p-3 text-right font-bold text-purple">88%</td>
+                                    <td class="p-3 text-right text-gray-500">75%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Right: Visual Chart -->
+                    <div class="h-64 flex justify-center">
+                        <canvas id="competencyRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Row 2: Five Boxes Details -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Box A -->
+                    <div class="p-5 bg-white rounded-lg shadow-sm border border-lavender hover:shadow-md transition-shadow">
+                        <h4 class="font-bold text-purple mb-3 text-lg border-b border-beige pb-2">
+                            <i class="fas fa-code mr-2"></i>A. Technical Skills
+                        </h4>
+                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
+                            <li>Programming languages</li>
+                            <li>Tools & technologies</li>
+                            <li>Domain knowledge (electronics, ML, networking)</li>
+                            <li>Problem-solving ability</li>
+                        </ul>
+                    </div>
+                    <!-- Box B -->
+                    <div class="p-5 bg-white rounded-lg shadow-sm border border-lavender hover:shadow-md transition-shadow">
+                        <h4 class="font-bold text-purple mb-3 text-lg border-b border-beige pb-2">
+                            <i class="fas fa-book-open mr-2"></i>B. Academic Competency
+                        </h4>
+                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
+                            <li>Subject-wise mastery</li>
+                            <li>Conceptual understanding</li>
+                            <li>Application skills</li>
+                            <li>Analytical thinking</li>
+                        </ul>
+                    </div>
+                    <!-- Box C -->
+                    <div class="p-5 bg-white rounded-lg shadow-sm border border-lavender hover:shadow-md transition-shadow">
+                        <h4 class="font-bold text-purple mb-3 text-lg border-b border-beige pb-2">
+                            <i class="fas fa-comments mr-2"></i>C. Soft Skills
+                        </h4>
+                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
+                            <li>Communication & Presentation</li>
+                            <li>Group discussion / teamwork</li>
+                            <li>Confidence & clarity</li>
+                            <li>Interpersonal dynamics</li>
+                        </ul>
+                    </div>
+                     <!-- Box D -->
+                    <div class="p-5 bg-white rounded-lg shadow-sm border border-lavender hover:shadow-md transition-shadow">
+                        <h4 class="font-bold text-purple mb-3 text-lg border-b border-beige pb-2">
+                            <i class="fas fa-user-tie mr-2"></i>D. Interview Readiness
+                        </h4>
+                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
+                            <li>Technical Interview</li>
+                            <li>HR Interview</li>
+                            <li>Situation-based questions</li>
+                            <li>Resume confidence</li>
+                        </ul>
+                    </div>
+                     <!-- Box E -->
+                    <div class="p-5 bg-white rounded-lg shadow-sm border border-lavender hover:shadow-md transition-shadow">
+                        <h4 class="font-bold text-purple mb-3 text-lg border-b border-beige pb-2">
+                            <i class="fas fa-clock mr-2"></i>E. Behavioural & Learning Skills
+                        </h4>
+                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
+                            <li>Consistency</li>
+                            <li>Attention to detail</li>
+                            <li>Time management</li>
+                            <li>Classroom engagement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Skill Mastery Mapping -->
+        <section class="animate-fade-in" style="animation-delay: 0.3s;">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-purple mb-6">3. Skill Mastery Mapping</h3>
+                
+                <!-- Table -->
+                <div class="overflow-x-auto mb-6 rounded-lg border border-lavender">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-purple text-white">
+                                <th class="p-4">Skill / Competency</th>
+                                <th class="p-4">Mastery Level</th>
+                                <th class="p-4">Evidence Used</th>
+                                <th class="p-4">AI Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="border-b border-beige hover:bg-beige transition-colors">
+                                <td class="p-4 font-medium">Python Programming</td>
+                                <td class="p-4"><span class="bg-lavender text-purple px-3 py-1 rounded-full text-sm font-bold bg-opacity-40">Proficient (78%)</span></td>
+                                <td class="p-4 text-sm text-gray-600">Code tests, assignments</td>
+                                <td class="p-4 text-sm text-gray-500 italic">Good logic but inconsistent use of functions</td>
+                            </tr>
+                            <tr class="border-b border-beige hover:bg-beige transition-colors">
+                                <td class="p-4 font-medium">Communication Skills</td>
+                                <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-bold">Developing (62%)</span></td>
+                                <td class="p-4 text-sm text-gray-600">GD score, presentation</td>
+                                <td class="p-4 text-sm text-gray-500 italic">Needs clarity & confidence</td>
+                            </tr>
+                            <tr class="border-b border-beige hover:bg-beige transition-colors">
+                                <td class="p-4 font-medium">DBMS Concepts</td>
+                                <td class="p-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold">Expert (91%)</span></td>
+                                <td class="p-4 text-sm text-gray-600">MCQ + practical test</td>
+                                <td class="p-4 text-sm text-gray-500 italic">Strong understanding of queries</td>
+                            </tr>
+                            <tr class="hover:bg-beige transition-colors">
+                                <td class="p-4 font-medium">Interview Readiness</td>
+                                <td class="p-4"><span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-bold">Needs Improvement (45%)</span></td>
+                                <td class="p-4 text-sm text-gray-600">Mock interview</td>
+                                <td class="p-4 text-sm text-gray-500 italic">Nervousness and short answers</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Explanation Box -->
+                <div class="p-6 bg-gradient-to-r from-beige to-cream rounded-lg border-l-4 border-purple shadow-sm">
+                    <h4 class="font-bold text-purple mb-2"><i class="fas fa-info-circle mr-2"></i>Mastery Insight</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        The mapping above indicates a clear strength in <span class="font-semibold">Backend Technologies</span> (DBMS, Python) compared to <span class="font-semibold">Soft Skills</span>. While the student excels in structured coding environments, performance drops in unstructured or high-pressure scenarios like mock interviews. The 'Developing' status in communication suggests a need for practice in articulation rather than technical knowledge.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Concept-Level Diagnostic Breakdown (Python) -->
+        <section class="animate-fade-in" style="animation-delay: 0.4s;">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-purple mb-6">4. Concept-Level Diagnostic Breakdown (Python)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    
+                    <!-- Left: Percentage Indicators -->
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-purple">Syntax mastery</span>
+                                <span class="text-sm font-bold text-purple">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-purple h-3 rounded-full mastery-bar-fill shadow" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-purple">Control structures</span>
+                                <span class="text-sm font-bold text-purple">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-purple h-3 rounded-full mastery-bar-fill shadow" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-purple">Functions</span>
+                                <span class="text-sm font-bold text-purple">68%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-lavender h-3 rounded-full mastery-bar-fill shadow" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-purple">OOP</span>
+                                <span class="text-sm font-bold text-purple">55%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-yellow-400 h-3 rounded-full mastery-bar-fill shadow" style="width: 55%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-purple">Error handling</span>
+                                <span class="text-sm font-bold text-purple">40%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-red-400 h-3 rounded-full mastery-bar-fill shadow" style="width: 40%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Explanation Box -->
+                    <div class="h-full p-6 bg-white rounded-xl border border-lavender shadow-sm flex flex-col justify-center">
+                        <h4 class="text-lg font-bold text-purple mb-4 border-b border-beige pb-2">Diagnostic Explanation</h4>
+                        <p class="text-gray-700 mb-4">
+                            The diagnostic data reveals a <span class="font-semibold text-green-600">strong foundation</span> in linear programming concepts (Syntax, Loops). However, as complexity increases (Functions, OOP), retention drops.
+                        </p>
+                        <p class="text-gray-700">
+                            <strong>Key Takeaway:</strong> The low score in Error Handling (40%) and OOP (55%) indicates the student writes code that works for "happy paths" but fails to build robust, scalable modular applications. Immediate intervention in Exception Handling logic is recommended.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5 & 6. Strengths & Skill Gaps -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in" style="animation-delay: 0.4s;">
+            <!-- Strengths Box -->
+            <div class="glass-card rounded-xl p-6 border-t-4 border-green-500 flex flex-col">
+                <h3 class="text-xl font-semibold text-purple mb-4">5. Strengths Identified</h3>
+                <div class="bg-white p-4 rounded-lg shadow-sm flex-grow">
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Strong understanding of DBMS & SQL queries</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Speaks confidently in structured situations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Learns new tools quickly and adapts well</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Maintains consistent class attendance</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Good in numerical aptitude and logic</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Gaps Box -->
+            <div class="glass-card rounded-xl p-6 border-t-4 border-red-500 flex flex-col">
+                <h3 class="text-xl font-semibold text-purple mb-4">6. Skill Gaps</h3>
+                <div class="bg-white p-4 rounded-lg shadow-sm flex-grow">
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Lacks fluency during interview answers</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Low confidence during Group Discussions</span>
+                        </li>
+                         <li class="flex items-start">
+                            <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Inconsistent performance in coding assessments</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Weak OOP concepts</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Limited exposure to real-world projects</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Personalized AI Feedback -->
+        <section class="animate-fade-in" style="animation-delay: 0.5s;">
+            <div class="glass-card rounded-xl p-6 bg-gradient-to-r from-purple to-indigo-900 text-white shadow-lg">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="flex-shrink-0 bg-white bg-opacity-20 p-4 rounded-full">
+                        <i class="fas fa-magic text-3xl text-yellow-300"></i>
+                    </div>
+                    <div class="flex-grow text-center md:text-left">
+                        <h3 class="text-xl font-bold text-white mb-2">7. Personalized AI Feedback</h3>
+                        <p class="text-purple-100 italic text-lg leading-relaxed">
+                            "Your technical fundamentals in DBMS are strong, but Python OOP and error handling must be improved. Focus on structured problem solving and practice interview-style questions. In GDs, try to maintain clarity, avoid filler words, and improve your articulation."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Recommended Learning Path -->
+        <section class="animate-fade-in" style="animation-delay: 0.5s;">
+            <div class="glass-card rounded-xl p-8">
+                <h3 class="text-xl font-semibold text-purple mb-8">8. Recommended Learning Path</h3>
+                <!-- Horizontal Layout -->
+                <div class="flex flex-col md:flex-row justify-between items-start relative gap-4">
+                    <!-- Connector Line (Desktop) -->
+                    <div class="hidden md:block absolute top-6 left-0 w-full h-1 bg-lavender -z-10"></div>
+                    
+                    <!-- Step 1 -->
+                    <div class="w-full md:w-1/3 bg-white p-5 rounded-lg border border-lavender shadow-sm relative mt-4 md:mt-0">
+                        <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-purple text-white w-10 h-10 rounded-full flex items-center justify-center font-bold border-4 border-white shadow-sm">1</div>
+                        <h4 class="font-bold text-purple text-center mt-4 mb-2">Short-term (1-2 weeks)</h4>
+                        <ul class="text-sm text-gray-600 list-disc pl-5 space-y-1">
+                            <li>Python OOP revision</li>
+                            <li>Daily communication conditioning</li>
+                            <li>Quick aptitude practice</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="w-full md:w-1/3 bg-white p-5 rounded-lg border border-lavender shadow-sm relative mt-8 md:mt-0">
+                        <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-lavender text-purple w-10 h-10 rounded-full flex items-center justify-center font-bold border-4 border-white shadow-sm">2</div>
+                        <h4 class="font-bold text-purple text-center mt-4 mb-2">Mid-term (2-6 weeks)</h4>
+                        <ul class="text-sm text-gray-600 list-disc pl-5 space-y-1">
+                            <li>Project-based learning</li>
+                            <li>Resume & LinkedIn improvement</li>
+                            <li>Mock interviews with feedback</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="w-full md:w-1/3 bg-white p-5 rounded-lg border border-lavender shadow-sm relative mt-8 md:mt-0">
+                        <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-white border-2 border-purple text-purple w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-sm">3</div>
+                        <h4 class="font-bold text-purple text-center mt-4 mb-2">Long-term (2-3 months)</h4>
+                        <ul class="text-sm text-gray-600 list-disc pl-5 space-y-1">
+                            <li>Advanced Python / Frameworks</li>
+                            <li>Mini-project for GitHub</li>
+                            <li>Internships / hands-on exposure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Job Role Fitment -->
+        <section class="animate-fade-in" style="animation-delay: 0.6s;">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-purple mb-6">9. Job Role Fitment</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    
+                    <!-- Left: Percentage Indicator (Visual Gauge Style) -->
+                    <div class="space-y-6">
+                        <div class="p-4 bg-white rounded-lg shadow-sm border border-lavender">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-gray-700">Data Entry / Ops</span>
+                                <span class="font-bold text-green-600">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4">
+                                <div class="bg-green-500 h-4 rounded-full shadow" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-white rounded-lg shadow-sm border border-lavender">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-gray-700">Junior QA Tester</span>
+                                <span class="font-bold text-purple">72%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4">
+                                <div class="bg-purple h-4 rounded-full shadow" style="width: 72%"></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-white rounded-lg shadow-sm border border-lavender">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-gray-700">Python Developer</span>
+                                <span class="font-bold text-lavender-dark text-purple">70%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4">
+                                <div class="bg-lavender h-4 rounded-full shadow" style="width: 70%"></div>
+                            </div>
+                        </div>
+                         <div class="p-4 bg-white rounded-lg shadow-sm border border-lavender">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-gray-700">Backend Intern</span>
+                                <span class="font-bold text-lavender-dark text-purple">65%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4">
+                                <div class="bg-lavender h-4 rounded-full shadow" style="width: 65%"></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-white rounded-lg shadow-sm border border-lavender opacity-80">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-gray-700">AI/ML Engineer</span>
+                                <span class="font-bold text-red-500">40%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4">
+                                <div class="bg-red-400 h-4 rounded-full shadow" style="width: 40%"></div>
+                            </div>
+                        </div>
+                         <div class="p-4 bg-white rounded-lg shadow-sm border border-lavender opacity-80">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-gray-700">Full Stack Developer</span>
+                                <span class="font-bold text-red-500">35%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4">
+                                <div class="bg-red-400 h-4 rounded-full shadow" style="width: 35%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Explanation Table -->
+                    <div class="h-full">
+                        <div class="overflow-hidden rounded-lg border border-lavender">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-purple text-white">
+                                    <tr>
+                                        <th class="p-3">Role</th>
+                                        <th class="p-3">Status</th>
+                                        <th class="p-3">Primary Gap</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white">
+                                    <tr class="border-b border-gray-100">
+                                        <td class="p-3 font-medium">Data Ops</td>
+                                        <td class="p-3 text-green-600 font-bold">High Fit</td>
+                                        <td class="p-3 text-gray-500">None</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="p-3 font-medium">QA Tester</td>
+                                        <td class="p-3 text-purple font-bold">Moderate</td>
+                                        <td class="p-3 text-gray-500">Automation Tools</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="p-3 font-medium">Python Dev</td>
+                                        <td class="p-3 text-purple font-bold">Moderate</td>
+                                        <td class="p-3 text-gray-500">OOP / Frameworks</td>
+                                    </tr>
+                                     <tr class="border-b border-gray-100">
+                                        <td class="p-3 font-medium">Backend Intern</td>
+                                        <td class="p-3 text-purple font-bold">Moderate</td>
+                                        <td class="p-3 text-gray-500">System Design</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="p-3 font-medium">AI Engineer</td>
+                                        <td class="p-3 text-red-500 font-bold">Low Fit</td>
+                                        <td class="p-3 text-gray-500">Math / Adv Algorithms</td>
+                                    </tr>
+                                     <tr>
+                                        <td class="p-3 font-medium">Full Stack</td>
+                                        <td class="p-3 text-red-500 font-bold">Low Fit</td>
+                                        <td class="p-3 text-gray-500">Frontend / Integration</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 p-4 bg-beige rounded-lg text-sm text-gray-700 italic border-l-4 border-purple">
+                            "The student is currently best suited for operational or testing roles. Transitioning to core development requires bridging the gap in Object Oriented Programming."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Probability of Success (AI Forecast) -->
+        <section class="animate-fade-in" style="animation-delay: 0.7s;">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-purple mb-6">10. Probability of Success (AI Forecast)</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <!-- Left: Current colored percentage indicator list -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border-l-4 border-green-500">
+                            <span class="text-gray-700 font-medium">HR Round Clearance</span>
+                            <span class="text-2xl font-bold text-green-600">80%</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border-l-4 border-purple">
+                            <span class="text-gray-700 font-medium">Placement Readiness (3 mo)</span>
+                            <span class="text-2xl font-bold text-purple">62%</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border-l-4 border-yellow-500">
+                            <span class="text-gray-700 font-medium">Cracking Technical Interview</span>
+                            <span class="text-2xl font-bold text-yellow-600">58%</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border-l-4 border-red-500">
+                            <span class="text-gray-700 font-medium">GD Shortlisting</span>
+                            <span class="text-2xl font-bold text-red-500">45%</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Professional Visual Representation (Chart) -->
+                    <div class="h-64 bg-white p-4 rounded-xl border border-lavender shadow-sm">
+                        <canvas id="probabilityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- 11. Final AI Summary -->
+        <section class="animate-fade-in" style="animation-delay: 0.8s;">
+            <div class="glass-card rounded-xl p-8 bg-white border-l-8 border-purple">
+                <h3 class="text-xl font-semibold text-purple mb-4">11. Final AI Summary</h3>
+                <div class="text-gray-700 leading-relaxed text-lg">
+                    <p>
+                        "The student demonstrates strong analytical thinking and good technical understanding in DBMS and Python basics. However, communication clarity and confidence must improve. With consistent practice in interviews, focused learning in OOP, and real project exposure, the student can achieve job readiness in the next 8–12 weeks."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-purple text-white py-6 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm opacity-80">&copy; 2025 Spark AI Learning Reports. All rights reserved.</p>
+            <p class="text-xs opacity-60 mt-2">Generated for educational analysis purposes.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts for Charts -->
+    <script>
+        // 1. Radar Chart for Competency Categories
+        const ctxRadar = document.getElementById('competencyRadarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: [
+                    'Technical',
+                    'Academic',
+                    'Soft Skills',
+                    'Interview',
+                    'Behavioural'
+                ],
+                datasets: [{
+                    label: 'Student',
+                    data: [78, 85, 62, 45, 88],
+                    fill: true,
+                    backgroundColor: 'rgba(103, 65, 136, 0.2)', // Purple transparent
+                    borderColor: '#674188',
+                    pointBackgroundColor: '#674188',
+                    pointBorderColor: '#fff',
+                }, {
+                    label: 'Batch Avg',
+                    data: [65, 70, 55, 50, 75],
+                    fill: true,
+                    backgroundColor: 'rgba(247, 239, 229, 0.4)', // Beige transparent
+                    borderColor: '#C3ACD0',
+                    borderDash: [5, 5],
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0,0,0,0.1)' },
+                        grid: { color: 'rgba(0,0,0,0.1)' },
+                        pointLabels: {
+                            font: { size: 11, family: "'Inter', sans-serif" },
+                            color: '#674188'
+                        },
+                        ticks: { display: false } // Hide numbers on radar axis for cleaner look
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 10, font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // 2. Probability Bar Chart
+        const ctxProb = document.getElementById('probabilityChart').getContext('2d');
+        new Chart(ctxProb, {
+            type: 'bar',
+            data: {
+                labels: ['HR Round', 'Readiness', 'Tech Interview', 'GD'],
+                datasets: [{
+                    label: 'Probability %',
+                    data: [80, 62, 58, 45],
+                    backgroundColor: [
+                        'rgba(34, 197, 94, 0.7)', // Green
+                        'rgba(103, 65, 136, 0.7)', // Purple
+                        'rgba(234, 179, 8, 0.7)',  // Yellow
+                        'rgba(239, 68, 68, 0.7)'   // Red
+                    ],
+                    borderColor: [
+                        'rgb(34, 197, 94)',
+                        'rgb(103, 65, 136)',
+                        'rgb(234, 179, 8)',
+                        'rgb(239, 68, 68)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y', // Horizontal Bar Chart for better readability
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { display: false }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

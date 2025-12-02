@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment AI Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFFBF5',
+                        beige: '#F7EFE5',
+                        lavender: '#C3ACD0',
+                        purple: '#674188',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FFFBF5; color: #2D3748; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(195, 172, 208, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(103, 65, 136, 0.05);
+        }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { color: #FFFBF5; background-color: #674188; }
+        .nav-link.active { background-color: #674188; color: #FFFBF5; font-weight: 600; }
+        .gap-high { background-color: #FECACA; color: #991B1B; }
+        .gap-med { background-color: #FEF3C7; color: #92400E; }
+        .gap-low { background-color: #D1FAE5; color: #065F46; }
+        /* Custom Thin Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #C3ACD0; /* Lavender */
+            border-radius: 10px;
+            border: 2px solid #FFFBF5; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #674188; /* Purple */
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-purple text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-search-dollar text-2xl text-lavender"></i>
+                    <h1 class="text-2xl font-bold tracking-tight">SPARK AI REPORTS</h1>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-2">
+                    <a href="01-individual-student.html" class="nav-link px-3 py-2 rounded-md text-sm">Individual Mastery</a>
+                    <a href="02-performance-trend.html" class="nav-link px-3 py-2 rounded-md text-sm">Performance Trend</a>
+                    <a href="03-skill-gap.html" class="nav-link active px-3 py-2 rounded-md text-sm">Skill Gap</a>
+                    <a href="04-cohort-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Cohort Summary</a>
+                    <a href="05-parent-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Parent Summary</a>
+                    <a href="06-holistic-dashboard.html" class="nav-link px-3 py-2 rounded-md text-sm">Holistic Dashboard</a>
+                    <a href="07-final-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Final Summary</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 space-y-8">
+        
+        <!-- 1. Header -->
+        <section>
+            <div class="glass-card rounded-xl p-8 border-l-8 border-purple flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-purple mb-2">Skill-Gap Analysis + Job-Readiness Scorecard</h2>
+                    <p class="text-gray-600">AI-Powered Placement Assessment & Gap Identification</p>
+                </div>
+                <div class="text-right mt-4 md:mt-0">
+                    <div class="text-sm text-gray-500">Final Job-Readiness Score</div>
+                    <div class="text-5xl font-bold text-purple">66<span class="text-2xl text-gray-400">/100</span></div>
+                    <div class="text-sm font-semibold text-yellow-600 mt-1">Moderately Ready</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Job-Readiness Scorecard -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">2. Job-Readiness Scorecard (AI Aggregate)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                
+                <!-- Left: Score Box -->
+                <div class="space-y-4 bg-white p-5 rounded-lg border border-lavender shadow-sm">
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span class="text-sm font-medium">Technical Skills (40% weight)</span>
+                        <span class="font-bold text-purple">28.8</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span class="text-sm font-medium">Aptitude / Reasoning (20% weight)</span>
+                        <span class="font-bold text-purple">12.0</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span class="text-sm font-medium">Communication / GD (15% weight)</span>
+                        <span class="font-bold text-purple">8.25</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span class="text-sm font-medium">Interview Performance (15% weight)</span>
+                        <span class="font-bold text-purple">8.7</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span class="text-sm font-medium">Behaviour / Consistency (10% weight)</span>
+                        <span class="font-bold text-purple">8.0</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2">
+                        <span class="font-bold text-lg">TOTAL SCORE</span>
+                        <span class="font-bold text-2xl text-purple">66 / 100</span>
+                    </div>
+                </div>
+
+                <!-- Right: AI Interpretation -->
+                <div class="p-6 bg-beige rounded-lg border-l-4 border-purple h-full flex items-center">
+                    <div>
+                        <h4 class="font-bold text-purple mb-3"><i class="fas fa-robot mr-2"></i>AI Interpretation</h4>
+                        <p class="text-gray-700 italic leading-relaxed text-lg">
+                            "The student is nearing readiness but requires focused improvement in communication and interview performance to meet corporate expectations."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Target Job Roles Analyzed -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">3. Target Job Roles Analyzed</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Left: Details -->
+                <div class="space-y-3">
+                    <p class="text-gray-600 mb-4">AI maps the student to available roles based on current competency:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center p-3 bg-white rounded shadow-sm border-l-4 border-purple">
+                            <i class="fas fa-laptop-code text-purple mr-3"></i>
+                            <span class="font-medium">Software Developer (Entry-Level)</span>
+                        </li>
+                        <li class="flex items-center p-3 bg-white rounded shadow-sm border-l-4 border-green-500">
+                            <i class="fas fa-bug text-green-600 mr-3"></i>
+                            <span class="font-medium">QA / Testing</span>
+                        </li>
+                        <li class="flex items-center p-3 bg-white rounded shadow-sm border-l-4 border-yellow-500">
+                            <i class="fas fa-chart-bar text-yellow-600 mr-3"></i>
+                            <span class="font-medium">Data Analyst (Junior)</span>
+                        </li>
+                        <li class="flex items-center p-3 bg-white rounded shadow-sm border-l-4 border-blue-400">
+                            <i class="fas fa-headset text-blue-500 mr-3"></i>
+                            <span class="font-medium">IT Support / Desktop Engineer</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right: Visual -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-purple text-white p-4 rounded-lg text-center shadow-lg">
+                        <i class="fas fa-briefcase text-3xl mb-2"></i>
+                        <div class="font-bold">5+ Roles</div>
+                        <div class="text-xs opacity-80">Mapped</div>
+                    </div>
+                    <div class="bg-lavender text-purple p-4 rounded-lg text-center shadow-lg">
+                        <i class="fas fa-check-circle text-3xl mb-2"></i>
+                        <div class="font-bold">2 High Fit</div>
+                        <div class="text-xs opacity-80">Identified</div>
+                    </div>
+                    <div class="bg-white text-gray-700 p-4 rounded-lg text-center shadow border border-lavender col-span-2">
+                        <div class="font-bold text-lg">Analysis Depth</div>
+                        <div class="text-sm text-gray-500">Skills + Assessments + Interests</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Job Fitment Percentages -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">4. Job Fitment Percentages (AI Matching Engine)</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                
+                <!-- Left: Explanation -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-purple text-white">
+                            <tr>
+                                <th class="p-3 rounded-tl-lg">Job Role</th>
+                                <th class="p-3">Fitment %</th>
+                                <th class="p-3 rounded-tr-lg">AI Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="border-b border-beige">
+                                <td class="p-3 font-medium">Software Developer</td>
+                                <td class="p-3 font-bold text-yellow-600">62%</td>
+                                <td class="p-3 text-gray-600">Strong basics, needs OOP + projects</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-3 font-medium">QA Tester</td>
+                                <td class="p-3 font-bold text-green-600">78%</td>
+                                <td class="p-3 text-gray-600">Good logical skills, attention to detail improving</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-3 font-medium">Data Analyst</td>
+                                <td class="p-3 font-bold text-red-500">55%</td>
+                                <td class="p-3 text-gray-600">Needs Excel + SQL depth</td>
+                            </tr>
+                            <tr class="border-b border-beige">
+                                <td class="p-3 font-medium">IT Support</td>
+                                <td class="p-3 font-bold text-green-600">80%</td>
+                                <td class="p-3 text-gray-600">Good communication + troubleshooting</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">BPO</td>
+                                <td class="p-3 font-bold text-green-600">88%</td>
+                                <td class="p-3 text-gray-600">High clarity, patience, basic English fluency</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Right: Chart -->
+                <div class="relative h-64">
+                    <canvas id="jobFitmentChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Skill-Gap Analysis (Core Section) -->
+        <section class="space-y-8">
+            <h2 class="text-2xl font-bold text-purple px-2">5. Skill-Gap Analysis (Core Section)</h2>
+
+            <!-- A. Technical Skill Gap -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-purple mb-4 border-b border-lavender pb-2">A. Technical Skill Gap</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-purple text-white">
+                                <tr>
+                                    <th class="p-3 rounded-tl-lg">Required Skill</th>
+                                    <th class="p-3">Requirement</th>
+                                    <th class="p-3">Student Level</th>
+                                    <th class="p-3">Gap</th>
+                                    <th class="p-3 rounded-tr-lg">AI Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="border-b border-beige">
+                                    <td class="p-3 font-medium">Python</td>
+                                    <td class="p-3">Intermediate</td>
+                                    <td class="p-3">Basic</td>
+                                    <td class="p-3"><span class="px-2 py-1 rounded text-xs font-bold gap-high">HIGH</span></td>
+                                    <td class="p-3">Needs more hands-on practice</td>
+                                </tr>
+                                <tr class="border-b border-beige">
+                                    <td class="p-3 font-medium">SQL / DBMS</td>
+                                    <td class="p-3">Intermediate</td>
+                                    <td class="p-3">Intermediate</td>
+                                    <td class="p-3"><span class="px-2 py-1 rounded text-xs font-bold gap-med">MEDIUM</span></td>
+                                    <td class="p-3">Improve joins, indexing</td>
+                                </tr>
+                                <tr class="border-b border-beige">
+                                    <td class="p-3 font-medium">Data Structures</td>
+                                    <td class="p-3">Basic-Inter</td>
+                                    <td class="p-3">Basic</td>
+                                    <td class="p-3"><span class="px-2 py-1 rounded text-xs font-bold gap-med">MEDIUM</span></td>
+                                    <td class="p-3">Weak in arrays, strings</td>
+                                </tr>
+                                <tr class="border-b border-beige">
+                                    <td class="p-3 font-medium">OOP Concepts</td>
+                                    <td class="p-3">Strong</td>
+                                    <td class="p-3">Weak</td>
+                                    <td class="p-3"><span class="px-2 py-1 rounded text-xs font-bold gap-high">HIGH</span></td>
+                                    <td class="p-3">Main blocker for developer roles</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">Git / Version</td>
+                                    <td class="p-3">Required</td>
+                                    <td class="p-3">Not learned</td>
+                                    <td class="p-3"><span class="px-2 py-1 rounded text-xs font-bold gap-high">HIGH</span></td>
+                                    <td class="p-3">Must learn for industry</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="lg:col-span-1 flex items-center justify-center bg-white rounded-lg p-4 shadow-sm border border-lavender">
+                         <div class="text-center">
+                             <div class="w-32 h-32 rounded-full border-8 border-red-200 flex items-center justify-center mx-auto mb-4">
+                                 <span class="text-2xl font-bold text-red-500">High</span>
+                             </div>
+                             <p class="font-bold text-gray-700">Critical Gap Priority</p>
+                             <p class="text-sm text-gray-500">OOP & Git require immediate attention.</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B. Aptitude/Reasoning Gap -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-purple mb-4 border-b border-lavender pb-2">B. Aptitude/Reasoning Gap</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 text-gray-700">
+                                <tr>
+                                    <th class="p-2">Aptitude Area</th>
+                                    <th class="p-2">Requirement</th>
+                                    <th class="p-2">Current</th>
+                                    <th class="p-2">Gap</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="border-b border-gray-100">
+                                    <td class="p-2 font-medium">Numerical Ability</td>
+                                    <td class="p-2">Moderate</td>
+                                    <td class="p-2 text-red-500 font-bold">Weak</td>
+                                    <td class="p-2"><span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">High</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="p-2 font-medium">Logical Reasoning</td>
+                                    <td class="p-2">Moderate</td>
+                                    <td class="p-2 text-yellow-600 font-bold">Moderate</td>
+                                    <td class="p-2"><span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded">Medium</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="p-2 font-medium">Verbal Ability</td>
+                                    <td class="p-2">High</td>
+                                    <td class="p-2 text-yellow-600 font-bold">Moderate</td>
+                                    <td class="p-2"><span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded">Medium</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-medium">Problem Solving</td>
+                                    <td class="p-2">High</td>
+                                    <td class="p-2 text-red-500 font-bold">Weak</td>
+                                    <td class="p-2"><span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">High</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-gradient-to-br from-beige to-white p-4 rounded-lg shadow-sm border border-lavender">
+                        <h4 class="font-bold text-gray-700 mb-2">Focus Area</h4>
+                        <p class="text-sm text-gray-600 mb-4">Numerical ability is the biggest bottleneck for clearing initial screening rounds.</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                            <div class="bg-red-400 h-2.5 rounded-full" style="width: 40%"></div>
+                        </div>
+                        <p class="text-xs text-right text-gray-500">40% Readiness</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C. Communication Skill Gap -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-purple mb-4 border-b border-lavender pb-2">C. Communication Skill Gap</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-start"><i class="fas fa-times-circle text-red-400 mt-1 mr-2"></i> GD participation low.</li>
+                        <li class="flex items-start"><i class="fas fa-times-circle text-red-400 mt-1 mr-2"></i> Lacks content generation during discussions.</li>
+                        <li class="flex items-start"><i class="fas fa-exclamation-circle text-yellow-500 mt-1 mr-2"></i> Moderate fluency but low articulation.</li>
+                        <li class="flex items-start"><i class="fas fa-exclamation-circle text-yellow-500 mt-1 mr-2"></i> Speaking confidence is inconsistent.</li>
+                        <li class="flex items-start"><i class="fas fa-exclamation-circle text-yellow-500 mt-1 mr-2"></i> Needs English grammar strengthening.</li>
+                    </ul>
+                    <div class="flex justify-center">
+                        <div class="p-4 bg-yellow-50 rounded-full border-2 border-yellow-200 w-40 h-40 flex flex-col items-center justify-center text-center shadow-sm">
+                            <i class="fas fa-comments text-3xl text-yellow-500 mb-2"></i>
+                            <span class="font-bold text-yellow-700">Moderate Gap</span>
+                            <span class="text-xs text-gray-500">Fluency vs Content</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D. Interview Skill Gap -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-purple mb-4 border-b border-lavender pb-2">D. Interview Skill Gap</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-start"><i class="fas fa-minus text-gray-400 mt-1 mr-2"></i> Answers lack depth.</li>
+                        <li class="flex items-start"><i class="fas fa-minus text-gray-400 mt-1 mr-2"></i> Difficulty explaining projects.</li>
+                        <li class="flex items-start"><i class="fas fa-minus text-gray-400 mt-1 mr-2"></i> Not connecting answers with real-world examples.</li>
+                        <li class="flex items-start"><i class="fas fa-minus text-gray-400 mt-1 mr-2"></i> Hesitation during HR questions.</li>
+                        <li class="flex items-start"><i class="fas fa-minus text-gray-400 mt-1 mr-2"></i> Average eye contact and clarity.</li>
+                        <li class="flex items-start"><i class="fas fa-minus text-gray-400 mt-1 mr-2"></i> Resume needs measurable achievements.</li>
+                    </ul>
+                    <div class="p-4 bg-white rounded-lg border border-lavender shadow-sm">
+                        <h4 class="font-bold text-purple mb-2">Mock Interview Trend</h4>
+                        <div class="flex items-end space-x-2 h-24">
+                            <div class="w-1/3 bg-gray-200 rounded-t h-[40%] relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs">Mock 1</span></div>
+                            <div class="w-1/3 bg-gray-300 rounded-t h-[55%] relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs">Mock 2</span></div>
+                            <div class="w-1/3 bg-purple rounded-t h-[70%] relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold">Latest</span></div>
+                        </div>
+                        <p class="text-xs text-center mt-2 text-gray-500">Gradual Improvement</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E. Behavioural Indicators -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-purple mb-4 border-b border-lavender pb-2">E. Behavioural Indicators</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 text-gray-700">
+                                <tr>
+                                    <th class="p-2">Metric</th>
+                                    <th class="p-2">Status</th>
+                                    <th class="p-2">Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="border-b border-gray-100">
+                                    <td class="p-2 font-medium">Attendance</td>
+                                    <td class="p-2 text-green-600 font-bold">Good</td>
+                                    <td class="p-2 text-xs">Improving consistency</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="p-2 font-medium">Assignment Completion</td>
+                                    <td class="p-2 text-yellow-600 font-bold">Moderate</td>
+                                    <td class="p-2 text-xs">Needs better discipline</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="p-2 font-medium">Learning Velocity</td>
+                                    <td class="p-2 text-yellow-600 font-bold">Medium</td>
+                                    <td class="p-2 text-xs">Can improve with practice</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="p-2 font-medium">Project Ownership</td>
+                                    <td class="p-2 text-red-500 font-bold">Low</td>
+                                    <td class="p-2 text-xs">Needs more real projects</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-medium">Engagement</td>
+                                    <td class="p-2 text-yellow-600 font-bold">Medium</td>
+                                    <td class="p-2 text-xs">Participates but irregular</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-4 bg-beige rounded-lg border border-purple border-dashed">
+                        <div class="text-4xl text-purple mb-2"><i class="fas fa-tasks"></i></div>
+                        <h4 class="font-bold text-gray-800">Effort Score</h4>
+                        <div class="text-2xl font-bold text-purple">7/10</div>
+                        <p class="text-xs text-gray-500 text-center mt-2">Consistent attendance is a key strength.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. AI-Generated Skill Gap Summary -->
+        <section class="glass-card rounded-xl p-8 bg-white border-l-8 border-purple">
+            <h3 class="text-xl font-semibold text-purple mb-4">6. AI-Generated Skill Gap Summary</h3>
+            <p class="text-gray-700 leading-relaxed text-lg italic">
+                "The primary blockers for job readiness are OOP concepts, aptitude speed, and communication clarity. The student shows strong potential in QA and IT support roles but needs targeted skill building to qualify for developer or analyst roles."
+            </p>
+        </section>
+
+        <!-- 7. Recommended Learning Roadmap -->
+        <section class="glass-card rounded-xl p-8 bg-gradient-to-r from-purple to-lavender text-white">
+            <h3 class="text-2xl font-bold mb-6">7. Recommended Learning Roadmap</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Immediate -->
+                <div class="bg-white bg-opacity-10 p-5 rounded-lg backdrop-blur-sm border border-white border-opacity-20 shadow-lg">
+                    <div class="flex items-center mb-3">
+                        <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded mr-2">1</span>
+                        <h4 class="font-bold text-lg text-white">Immediate (1-2 Weeks)</h4>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-2 opacity-90">
+                        <li>Daily OOP revision</li>
+                        <li>30 mins English speaking practice</li>
+                        <li>5 aptitude tests</li>
+                    </ul>
+                </div>
+                <!-- Short Term -->
+                <div class="bg-white bg-opacity-10 p-5 rounded-lg backdrop-blur-sm border border-white border-opacity-20 shadow-lg">
+                    <div class="flex items-center mb-3">
+                        <span class="bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded mr-2">2</span>
+                        <h4 class="font-bold text-lg text-white">Short Term (3-6 Weeks)</h4>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-2 opacity-90">
+                        <li>Build 1 coding mini-project</li>
+                        <li>Attend GD workshops</li>
+                        <li>Resume restructuring</li>
+                        <li>3 mock interviews</li>
+                    </ul>
+                </div>
+                <!-- Long Term -->
+                <div class="bg-white bg-opacity-10 p-5 rounded-lg backdrop-blur-sm border border-white border-opacity-20 shadow-lg">
+                    <div class="flex items-center mb-3">
+                        <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded mr-2">3</span>
+                        <h4 class="font-bold text-lg text-white">Long Term (2-3 Months)</h4>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-2 opacity-90">
+                        <li>Complete Python + SQL intermediate track</li>
+                        <li>Contribute to GitHub</li>
+                        <li>Internship or real project exposure</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Final Employability Prediction -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">8. Final Employability Prediction</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Left: Details -->
+                <div class="space-y-4">
+                    <p class="text-gray-600 mb-2 font-medium">If the roadmap is followed:</p>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-700">Developer Role Readiness</span>
+                            <span class="font-bold text-purple">70–75% <span class="text-xs font-normal text-gray-500">(in 8–12 weeks)</span></span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-700">QA Tester Readiness</span>
+                            <span class="font-bold text-green-600">85–90% <span class="text-xs font-normal text-gray-500">(in 4–6 weeks)</span></span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-700">IT Support Readiness</span>
+                            <span class="font-bold text-green-600">90% <span class="text-xs font-normal text-gray-500">(in 3–4 weeks)</span></span>
+                        </li>
+                         <li class="flex justify-between items-center pt-2 border-t border-gray-100">
+                            <span class="text-base font-bold text-gray-800">Overall Job-Readiness</span>
+                            <span class="font-bold text-purple">Likely job-ready in 6–10 weeks</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Right: Visual Progress -->
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-xs font-medium text-gray-500">Developer Path</span>
+                            <span class="text-xs font-bold text-purple">75% Potential</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-purple h-2.5 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-xs font-medium text-gray-500">QA/Testing Path</span>
+                            <span class="text-xs font-bold text-green-500">90% Potential</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-green-500 h-2.5 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-purple text-white py-6 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm opacity-80">&copy; 2025 Spark AI Learning Reports.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Job Fitment Chart
+        const ctxFit = document.getElementById('jobFitmentChart').getContext('2d');
+        new Chart(ctxFit, {
+            type: 'bar',
+            data: {
+                labels: ['Software Dev', 'QA Tester', 'Data Analyst', 'IT Support', 'BPO'],
+                datasets: [{
+                    label: 'Fitment %',
+                    data: [62, 78, 55, 80, 88],
+                    backgroundColor: [
+                        '#C3ACD0', // Lavender
+                        '#674188', // Purple
+                        '#FECACA',
+                        '#F7EFE5', // Beige (Darker in chart context maybe needed, but sticking to theme)
+                        '#10B981'
+                    ],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100 } },
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+</body>
+</html>

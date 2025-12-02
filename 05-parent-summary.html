@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment AI Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFFBF5',
+                        beige: '#F7EFE5',
+                        lavender: '#C3ACD0',
+                        purple: '#674188',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FFFBF5; color: #2D3748; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(195, 172, 208, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(103, 65, 136, 0.05);
+        }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { color: #FFFBF5; background-color: #674188; }
+        .nav-link.active { background-color: #674188; color: #FFFBF5; font-weight: 600; }
+        .card-pop:hover { transform: translateY(-5px); transition: transform 0.3s; }
+        /* Custom Thin Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #C3ACD0; /* Lavender */
+            border-radius: 10px;
+            border: 2px solid #FFFBF5; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #674188; /* Purple */
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-purple text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-home text-2xl text-lavender"></i>
+                    <h1 class="text-2xl font-bold tracking-tight">SPARK AI REPORTS</h1>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-2">
+                    <a href="01-individual-student.html" class="nav-link px-3 py-2 rounded-md text-sm">Individual Mastery</a>
+                    <a href="02-performance-trend.html" class="nav-link px-3 py-2 rounded-md text-sm">Performance Trend</a>
+                    <a href="03-skill-gap.html" class="nav-link px-3 py-2 rounded-md text-sm">Skill Gap</a>
+                    <a href="04-cohort-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Cohort Summary</a>
+                    <a href="05-parent-summary.html" class="nav-link active px-3 py-2 rounded-md text-sm">Parent Summary</a>
+                    <a href="06-holistic-dashboard.html" class="nav-link px-3 py-2 rounded-md text-sm">Holistic Dashboard</a>
+                    <a href="07-final-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Final Summary</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 space-y-8">
+        
+        <!-- Welcome Header -->
+        <section class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-purple">Parent Dashboard</h2>
+            <p class="text-gray-600">A simplified view of your child's progress, strengths, and needs.</p>
+        </section>
+
+        <!-- 1. Overall Progress Summary (Left: Explanation, Right: Visual) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">1. Overall Progress Summary (At a Glance)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <p class="text-gray-700 text-sm">A quick snapshot of the student's current standing based on recent data.</p>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="text-gray-600">Overall Performance Score</span>
+                            <span class="font-bold text-purple">78/100</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="text-gray-600">Attendance Status</span>
+                            <span class="font-bold text-green-600">Good (86%)</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="text-gray-600">Learning Attitude</span>
+                            <span class="font-bold text-purple">Active</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="text-gray-600">Weekly Progress Indicator</span>
+                            <span class="font-bold text-green-600"><i class="fas fa-arrow-up mr-1"></i>Improving</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Visual -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-purple text-white p-4 rounded-xl text-center shadow-lg">
+                        <div class="text-3xl font-bold">78</div>
+                        <div class="text-xs opacity-80">Overall Score</div>
+                    </div>
+                    <div class="bg-white border-2 border-green-500 p-4 rounded-xl text-center shadow-lg">
+                        <div class="text-3xl font-bold text-green-600">A</div>
+                        <div class="text-xs text-gray-500">Participation</div>
+                    </div>
+                    <div class="bg-lavender text-purple p-4 rounded-xl text-center shadow-lg col-span-2">
+                        <div class="font-bold text-lg">Active Learner</div>
+                        <div class="text-xs opacity-70">Current Status</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Academic Performance Overview (Left: Visual, Right: Explanation) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">2. Academic Performance Overview</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Visual -->
+                <div class="h-64">
+                    <canvas id="academicBarChart"></canvas>
+                </div>
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-lavender">
+                        <h4 class="font-bold text-purple text-sm mb-2">Highlights</h4>
+                        <ul class="text-sm text-gray-700 space-y-2">
+                            <li><span class="font-bold text-green-600">Strong In:</span> Practical Learning & Coding.</li>
+                            <li><span class="font-bold text-red-500">Needs Practice:</span> Analytical Thinking & Theory.</li>
+                            <li><span class="font-bold text-gray-600">Trend:</span> Consistent improvement over last 4 weeks.</li>
+                            <li><span class="font-bold text-purple">Homework:</span> 92% assignment completion rate.</li>
+                        </ul>
+                    </div>
+                    <p class="text-xs text-gray-500 italic">"Visualizes subject-wise strength. Coding is a clear strong point."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Skill Development Summary (Left: Explanation, Right: Visual) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">3. Skill Development Summary</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <p class="text-gray-700 font-medium">Covers technical, communication, and behavioural skills:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                        <li><strong>Communication:</strong> Growing confidence in writing.</li>
+                        <li><strong>Problem-solving:</strong> Good at practical tasks.</li>
+                        <li><strong>Coding / Technical:</strong> High aptitude shown.</li>
+                        <li><strong>Teamwork:</strong> Collaborates well in group projects.</li>
+                    </ul>
+                    <div class="mt-4 p-3 bg-beige rounded border-l-4 border-purple text-sm text-gray-700">
+                        <strong>Parent Note:</strong> "Your child shows strength in practical learning. Needs more practice in analytical thinking."
+                    </div>
+                </div>
+                <!-- Visual -->
+                <div class="h-64">
+                    <canvas id="skillRadarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Behaviour & Discipline Insights (Left: Visual, Right: Explanation) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">4. Behaviour & Discipline Insights</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Visual -->
+                <div class="flex justify-center h-64">
+                    <canvas id="behaviorDoughnutChart"></canvas>
+                </div>
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-clock text-green-500 w-6"></i> <strong>Punctuality:</strong> Excellent consistency.</li>
+                        <li class="flex items-center"><i class="fas fa-hands-helping text-purple w-6"></i> <strong>Respect & Teamwork:</strong> Very Good.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 w-6"></i> <strong>Accountability:</strong> Submits work on time.</li>
+                        <li class="flex items-center"><i class="fas fa-eye text-yellow-500 w-6"></i> <strong>Focus:</strong> Attention span varies in PM sessions.</li>
+                    </ul>
+                    <div class="mt-4 bg-red-50 p-3 rounded border border-red-200">
+                        <h5 class="text-xs font-bold text-red-600 uppercase mb-1">Alerts</h5>
+                        <ul class="text-xs text-red-700 list-disc list-inside">
+                            <li>Low engagement in theory classes.</li>
+                            <li>Late submission for Module 3 assignment.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Career & Employability Readiness (Left: Explanation, Right: Visual) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">5. Career & Employability Readiness</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <p class="text-sm text-gray-600">For higher grades / college students.</p>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex justify-between">
+                            <span>Job Readiness Score</span>
+                            <span class="font-bold text-purple">66/100 (Moderate)</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Strength Fit</span>
+                            <span class="font-bold text-gray-700">Developer / QA Roles</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Resume Status</span>
+                            <span class="font-bold text-yellow-600">Needs Review</span>
+                        </li>
+                    </ul>
+                    <p class="text-xs text-gray-500 italic mt-2">"Parents get clarity on where their child stands for future employment."</p>
+                </div>
+                <!-- Visual -->
+                <div class="flex justify-center items-center">
+                    <div class="relative w-40 h-40">
+                        <div class="absolute inset-0 flex items-center justify-center flex-col">
+                            <span class="text-3xl font-bold text-purple">66%</span>
+                            <span class="text-xs text-gray-500">Ready</span>
+                        </div>
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="80" cy="80" r="70" stroke="#F7EFE5" stroke-width="12" fill="transparent"/>
+                            <circle cx="80" cy="80" r="70" stroke="#674188" stroke-width="12" fill="transparent" stroke-dasharray="440" stroke-dashoffset="150"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Personalized Recommendations (Left: Visual, Right: Explanation) -->
+        <section class="glass-card rounded-xl p-6 bg-gradient-to-r from-purple to-lavender text-white">
+            <h3 class="text-xl font-semibold text-white mb-6">6. Personalized Recommendations for Parents</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Visual -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg text-center backdrop-blur-sm">
+                        <i class="fas fa-clock text-2xl mb-2"></i>
+                        <div class="text-sm font-bold">20 Mins</div>
+                        <div class="text-xs opacity-80">Daily Revision</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg text-center backdrop-blur-sm">
+                        <i class="fas fa-comments text-2xl mb-2"></i>
+                        <div class="text-sm font-bold">Speaking</div>
+                        <div class="text-xs opacity-80">Practice at Home</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg text-center backdrop-blur-sm">
+                        <i class="fas fa-laptop-code text-2xl mb-2"></i>
+                        <div class="text-sm font-bold">Projects</div>
+                        <div class="text-xs opacity-80">Support Participation</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg text-center backdrop-blur-sm">
+                        <i class="fas fa-user-tie text-2xl mb-2"></i>
+                        <div class="text-sm font-bold">Mock</div>
+                        <div class="text-xs opacity-80">Interviews</div>
+                    </div>
+                </div>
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <h4 class="font-bold text-lg mb-2 border-b border-white border-opacity-30 pb-2">Simple Action Points</h4>
+                    <ul class="list-disc list-inside space-y-2 text-sm opacity-90">
+                        <li>Encourage child to spend 20 mins/day on revision.</li>
+                        <li>Support participation in projects / competitions.</li>
+                        <li>Help maintain consistent attendance.</li>
+                        <li>Encourage speaking practice at home.</li>
+                        <li>Motivate for mock interviews / coding practice.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Alerts & Important Notifications (Left: Explanation, Right: Visual) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">7. Alerts & Important Notifications</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-file-alt text-purple w-6"></i> <strong>Upcoming Tests:</strong> Python Final (Next Friday).</li>
+                        <li class="flex items-center"><i class="fas fa-clock text-red-500 w-6"></i> <strong>Deadlines:</strong> Capstone Project Draft (24th).</li>
+                        <li class="flex items-center"><i class="fas fa-users text-green-600 w-6"></i> <strong>Meetings:</strong> Parent-Teacher Meet scheduled.</li>
+                        <li class="flex items-center"><i class="fas fa-exclamation-triangle text-yellow-500 w-6"></i> <strong>Behaviour:</strong> Late arrival alert (2x this week).</li>
+                    </ul>
+                </div>
+                <!-- Visual -->
+                <div class="flex flex-col gap-3">
+                    <div class="p-3 bg-red-100 border-l-4 border-red-500 rounded text-red-800 text-sm font-bold shadow-sm">
+                        <i class="fas fa-bell mr-2"></i> Performance Drop Alert (Logic)
+                    </div>
+                    <div class="p-3 bg-yellow-100 border-l-4 border-yellow-500 rounded text-yellow-800 text-sm font-bold shadow-sm">
+                        <i class="fas fa-calendar-alt mr-2"></i> Attendance Drop Alert
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Teacher / Mentor Comments (Left: Visual, Right: Explanation) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">8. Teacher / Mentor Comments</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Visual -->
+                <div class="flex justify-center">
+                    <div class="relative bg-white p-6 rounded-2xl shadow-md border border-lavender max-w-xs text-center">
+                        <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-purple text-white rounded-full flex items-center justify-center text-xl shadow-sm">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="text-purple font-bold mt-2">Mentor Insight</p>
+                        <p class="text-xs text-gray-500">Human + AI Analysis</p>
+                    </div>
+                </div>
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <div class="space-y-3 text-sm text-gray-700">
+                        <p><strong>Teacher's Comment:</strong> "Your child is very engaged in practical classes but tends to stay quiet during theory discussions. A little encouragement to speak up would help."</p>
+                        <p><strong>AI Summary:</strong> "Progress is steady. Practical skills are in the top 20% of the cohort."</p>
+                        <p class="text-green-600 font-bold"><i class="fas fa-star mr-1"></i> Appreciation: Best Project Award nominee.</p>
+                        <p class="bg-purple text-white p-2 rounded text-xs"><strong>Action for Next Month:</strong> Focus on Data Structures revision.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Monthly Growth Graph (Left: Explanation, Right: Visual) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">9. Monthly Growth Graph (Easy View)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <p class="text-sm text-gray-600">A simple graph showing improvement trends over time.</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li><strong>Marks Trend:</strong> Upward trajectory.</li>
+                        <li><strong>Skill Improvement:</strong> Consistent coding growth.</li>
+                        <li><strong>Attendance:</strong> Stable at 86%.</li>
+                        <li><strong>Engagement:</strong> Slight dip in Month 2, recovered in Month 3.</li>
+                    </ul>
+                    <p class="text-xs italic text-purple mt-2">"Parents can visually see if their child is improving."</p>
+                </div>
+                <!-- Visual -->
+                <div class="h-64">
+                    <canvas id="monthlyGrowthChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. How Your Child Compares (Left: Visual, Right: Explanation) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-purple mb-6">10. How Your Child Compares with the Cohort</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Visual -->
+                <div class="h-64">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+                <!-- Explanation -->
+                <div class="space-y-4">
+                    <p class="text-sm text-gray-600 font-bold">Not competitive — but informative context.</p>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold mr-2">ABOVE AVG</span> In Coding Practicals.</li>
+                        <li><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-bold mr-2">AVERAGE</span> In Theory Assessments.</li>
+                        <li><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold mr-2">BELOW AVG</span> In Public Speaking.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2">
+                        "Your child performs better than the batch in practical tasks but struggles with common areas like theory articulation."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-purple text-white py-6 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm opacity-80">&copy; 2025 Spark AI Learning Reports.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts for Charts -->
+    <script>
+        // 2. Academic Bar Chart
+        const ctxAcad = document.getElementById('academicBarChart').getContext('2d');
+        new Chart(ctxAcad, {
+            type: 'bar',
+            data: {
+                labels: ['Coding', 'Logic', 'Comm.', 'Teamwork'],
+                datasets: [{
+                    label: 'Student Score',
+                    data: [85, 55, 65, 90],
+                    backgroundColor: ['#674188', '#EF4444', '#C3ACD0', '#10B981'],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 100 } }
+            }
+        });
+
+        // 3. Skill Radar Chart
+        const ctxRadar = document.getElementById('skillRadarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: ['Comm', 'Problem Solving', 'Coding', 'Logic', 'Teamwork', 'Creativity'],
+                datasets: [{
+                    label: 'Student',
+                    data: [65, 75, 85, 60, 90, 70],
+                    backgroundColor: 'rgba(103, 65, 136, 0.2)',
+                    borderColor: '#674188',
+                    pointBackgroundColor: '#674188'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { r: { suggesteMin: 0, suggestedMax: 100 } }
+            }
+        });
+
+        // 4. Behavior Doughnut Chart
+        const ctxBehav = document.getElementById('behaviorDoughnutChart').getContext('2d');
+        new Chart(ctxBehav, {
+            type: 'doughnut',
+            data: {
+                labels: ['Focused', 'Distracted', 'Active', 'Passive'],
+                datasets: [{
+                    data: [60, 10, 20, 10],
+                    backgroundColor: ['#10B981', '#EF4444', '#674188', '#F59E0B'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // 9. Monthly Growth Line Chart
+        const ctxGrowth = document.getElementById('monthlyGrowthChart').getContext('2d');
+        new Chart(ctxGrowth, {
+            type: 'line',
+            data: {
+                labels: ['Month 1', 'Month 2', 'Month 3'],
+                datasets: [{
+                    label: 'Performance',
+                    data: [60, 68, 78],
+                    borderColor: '#674188',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(103, 65, 136, 0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100 } }
+            }
+        });
+
+        // 10. Comparison Bar Chart
+        const ctxComp = document.getElementById('comparisonChart').getContext('2d');
+        new Chart(ctxComp, {
+            type: 'bar',
+            data: {
+                labels: ['Coding', 'Theory', 'Speaking'],
+                datasets: [
+                    {
+                        label: 'Your Child',
+                        data: [85, 60, 55],
+                        backgroundColor: '#674188'
+                    },
+                    {
+                        label: 'Class Avg',
+                        data: [70, 65, 60],
+                        backgroundColor: '#C3ACD0'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100 } }
+            }
+        });
+    </script>
+</body>
+</html>

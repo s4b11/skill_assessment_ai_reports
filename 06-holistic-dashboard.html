@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment AI Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFFBF5',
+                        beige: '#F7EFE5',
+                        lavender: '#C3ACD0',
+                        purple: '#674188',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FFFBF5; color: #2D3748; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(195, 172, 208, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(103, 65, 136, 0.05);
+        }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { color: #FFFBF5; background-color: #674188; }
+        .nav-link.active { background-color: #674188; color: #FFFBF5; font-weight: 600; }
+        /* Custom Thin Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #C3ACD0; border-radius: 10px; border: 2px solid #FFFBF5; }
+        ::-webkit-scrollbar-thumb:hover { background-color: #674188; }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-purple text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-tachometer-alt text-2xl text-lavender"></i>
+                    <h1 class="text-2xl font-bold tracking-tight">SPARK AI REPORTS</h1>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-2">
+                    <a href="01-individual-student.html" class="nav-link px-3 py-2 rounded-md text-sm">Individual Mastery</a>
+                    <a href="02-performance-trend.html" class="nav-link px-3 py-2 rounded-md text-sm">Performance Trend</a>
+                    <a href="03-skill-gap.html" class="nav-link px-3 py-2 rounded-md text-sm">Skill Gap</a>
+                    <a href="04-cohort-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Cohort Summary</a>
+                    <a href="05-parent-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Parent Summary</a>
+                    <a href="06-holistic-dashboard.html" class="nav-link active px-3 py-2 rounded-md text-sm">Holistic Dashboard</a>
+                    <a href="07-final-summary.html" class="nav-link px-3 py-2 rounded-md text-sm">Final Summary</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 space-y-8">
+        
+        <section class="mb-4 text-center">
+            <h2 class="text-3xl font-bold text-purple">Holistic 360° Student Success Dashboard</h2>
+            <p class="text-gray-600">Comprehensive view of Academic, Skill, and Employability Metrics</p>
+        </section>
+
+        <!-- 1. Student Overview (Details Left, Visual Right) -->
+        <section class="glass-card rounded-xl p-6 border-l-4 border-purple">
+            <h3 class="text-xl font-bold text-purple mb-6">1. Student Overview</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Details -->
+                <div class="space-y-4">
+                    <div class="flex justify-between border-b border-gray-100 pb-2">
+                        <span class="text-gray-600">Name / Class</span>
+                        <span class="font-bold text-gray-800">Alex Johnson / B.Tech CS</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-100 pb-2">
+                        <span class="text-gray-600">Assessment Period</span>
+                        <span class="font-bold text-gray-800">Jan 2024 - Apr 2024</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-100 pb-2">
+                        <span class="text-gray-600">Overall Performance Score</span>
+                        <span class="font-bold text-purple text-lg">78/100</span>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                        <p class="text-sm text-blue-800 italic">"The student has progressed well in technical domains but shows a slight dip in communication consistency."</p>
+                    </div>
+                </div>
+
+                <!-- Right: Visual Snapshot -->
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="p-4 bg-purple text-white rounded-xl shadow-md">
+                        <div class="text-3xl font-bold">86%</div>
+                        <div class="text-xs opacity-80">Attendance</div>
+                    </div>
+                    <div class="p-4 bg-white border border-green-500 rounded-xl shadow-md">
+                        <div class="text-3xl font-bold text-green-600">Intermediate</div>
+                        <div class="text-xs text-gray-500">Skill Level</div>
+                    </div>
+                    <div class="p-4 bg-lavender text-purple rounded-xl shadow-md">
+                        <div class="text-3xl font-bold">Active</div>
+                        <div class="text-xs opacity-70">Engagement</div>
+                    </div>
+                    <div class="p-4 bg-white border border-purple rounded-xl shadow-md">
+                        <div class="text-2xl font-bold text-purple"><i class="fas fa-arrow-up"></i> +12%</div>
+                        <div class="text-xs text-gray-500">Improvement</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Academic Performance Dashboard (Visual Left, Details Right) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-bold text-purple mb-6">2. Academic Performance Dashboard</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Visual Charts -->
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-500 mb-2">Subject / Module Scores</h4>
+                        <div class="h-48">
+                            <canvas id="academicBarChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-500 mb-2">Trend Graph (Last 8 Weeks)</h4>
+                        <div class="h-32">
+                            <canvas id="academicTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-green-700 mb-2"><i class="fas fa-check-circle mr-2"></i>2.2 Academic Strengths</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>Strong in: <span class="font-semibold">Loops, SQL Basics, OOP Concepts</span></li>
+                            <li>Good project submission discipline</li>
+                            <li>Strong analytical ability in coding tasks</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-red-600 mb-2"><i class="fas fa-exclamation-circle mr-2"></i>2.3 Improvement Areas</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>Needs revision in <span class="font-semibold">DS Algorithms</span></li>
+                            <li>Low consistency in weekly quizzes</li>
+                            <li>Scores drop when assignments pile up</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Skill Profile & Competency Mapping (Details Left, Visual Right) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-bold text-purple mb-6">3. Skill Profile & Competency Mapping</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Details -->
+                <div class="space-y-6">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-lavender">
+                        <h4 class="font-bold text-purple mb-3">3.2 Competency Summary</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>Technical Competency</span>
+                                <span class="font-bold text-gray-800">72%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-1.5 rounded-full"><div class="bg-purple h-1.5 rounded-full" style="width: 72%"></div></div>
+                            
+                            <div class="flex justify-between">
+                                <span>Communication Competency</span>
+                                <span class="font-bold text-gray-800">68%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-1.5 rounded-full"><div class="bg-lavender h-1.5 rounded-full" style="width: 68%"></div></div>
+
+                            <div class="flex justify-between">
+                                <span>Behavioural Competency</span>
+                                <span class="font-bold text-gray-800">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-1.5 rounded-full"><div class="bg-green-500 h-1.5 rounded-full" style="width: 80%"></div></div>
+                            
+                            <div class="flex justify-between pt-2">
+                                <span>Professional Etiquette</span>
+                                <span class="font-bold text-green-600">Good</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-700 mb-2">3.3 AI Feedback (Student-Friendly)</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Strong foundation in conceptual thinking.</li>
+                            <li>Shows curiosity and good doubt-asking behaviour.</li>
+                            <li>Can improve time management and task prioritization.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right: Visual Heat Map -->
+                <div>
+                    <h4 class="font-bold text-gray-500 mb-3 text-sm">3.1 Skill Heat Map</h4>
+                    <div class="grid grid-cols-2 gap-3 text-center text-sm text-white">
+                        <div class="p-4 bg-purple rounded shadow-sm">Coding Skills <br><span class="text-xs opacity-80">Advanced</span></div>
+                        <div class="p-4 bg-lavender rounded shadow-sm text-purple font-bold">Logical Reasoning <br><span class="text-xs opacity-80">Intermediate</span></div>
+                        <div class="p-4 bg-lavender rounded shadow-sm text-purple font-bold">Data Interp. <br><span class="text-xs opacity-80">Intermediate</span></div>
+                        <div class="p-4 bg-purple rounded shadow-sm">Teamwork <br><span class="text-xs opacity-80">Advanced</span></div>
+                        <div class="p-4 bg-red-300 rounded shadow-sm text-red-900 font-bold">Communication <br><span class="text-xs opacity-80">Beginner</span></div>
+                        <div class="p-4 bg-purple rounded shadow-sm">Creativity <br><span class="text-xs opacity-80">Advanced</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Employability & Job Readiness (Visual Left, Details Right) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-bold text-purple mb-6">4. Employability & Job Readiness Dashboard</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Visual Scorecard & Role Fit -->
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-purple to-lavender text-white p-5 rounded-xl shadow-lg flex justify-between items-center">
+                        <div>
+                            <div class="text-sm opacity-90">Overall Job-Readiness</div>
+                            <div class="text-4xl font-bold">70%</div>
+                        </div>
+                        <div class="text-right text-sm space-y-1">
+                            <div>Tech Readiness: <strong>65%</strong></div>
+                            <div>Comm Readiness: <strong>72%</strong></div>
+                            <div>Interview Behav: <strong>68%</strong></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-lg border border-lavender">
+                        <h4 class="font-bold text-purple text-sm mb-3">4.2 Role Fit Mapping</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm">
+                                <span>Software Developer</span>
+                                <span class="font-bold text-green-600">82% match</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-green-600 h-2 rounded-full" style="width: 82%"></div></div>
+                            
+                            <div class="flex justify-between text-sm">
+                                <span>QA / Testing</span>
+                                <span class="font-bold text-purple">74% match</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-purple h-2 rounded-full" style="width: 74%"></div></div>
+                            
+                            <div class="flex justify-between text-sm">
+                                <span>Data Assistant</span>
+                                <span class="font-bold text-yellow-600">63% match</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-yellow-600 h-2 rounded-full" style="width: 63%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Details (Gaps & Activities) -->
+                <div class="space-y-6">
+                    <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                        <h4 class="font-bold text-red-700 mb-2">4.3 Identified Skill Gaps</h4>
+                        <ul class="list-disc list-inside text-sm text-red-800 space-y-1">
+                            <li>Data Structures (Trees, Graphs)</li>
+                            <li>Real-world project exposure</li>
+                            <li>Advanced communication (fluency + structuring answers)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                        <h4 class="font-bold text-green-700 mb-2">4.4 Recommended Activities</h4>
+                        <ul class="list-disc list-inside text-sm text-green-800 space-y-1">
+                            <li>20 minutes daily DSA practice</li>
+                            <li>Participate in 2 mock interviews per month</li>
+                            <li>Improve resume formatting and project description</li>
+                            <li>Practice behavioural answers (STAR method)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Cohort-Level Insights (Details Left, Visual Right) -->
+        <section class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-bold text-purple mb-6">5. Cohort-Level Insights (For Teachers)</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Details -->
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2">5.1 Common Struggle Areas</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li><span class="font-bold text-red-500">62%</span> perform low in DSA</li>
+                            <li><span class="font-bold text-red-500">48%</span> have weak communication fluency</li>
+                            <li><span class="font-bold text-yellow-600">54%</span> score low in aptitude reasoning</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2">5.3 Training Effectiveness Score</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex justify-between bg-white p-2 rounded shadow-sm">
+                                <span>Training Impact</span>
+                                <span class="font-bold text-green-600">72%</span>
+                            </li>
+                            <li class="flex justify-between bg-white p-2 rounded shadow-sm">
+                                <span>Learning Consistency</span>
+                                <span class="font-bold text-yellow-600">Medium</span>
+                            </li>
+                            <li class="flex justify-between bg-white p-2 rounded shadow-sm">
+                                <span>Attendance Health</span>
+                                <span class="font-bold text-green-600">Good</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right: Visual Flagged Students -->
+                <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                    <h4 class="font-bold text-gray-700 mb-3">5.4 Students Needing Support</h4>
+                    <p class="text-xs text-gray-500 mb-3">Students flagged for:</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm p-2 bg-white rounded border border-red-100 text-red-700">
+                            <i class="fas fa-user-clock mr-3"></i> Low Engagement
+                        </div>
+                        <div class="flex items-center text-sm p-2 bg-white rounded border border-yellow-100 text-yellow-700">
+                            <i class="fas fa-calendar-times mr-3"></i> High Attendance Drop
+                        </div>
+                        <div class="flex items-center text-sm p-2 bg-white rounded border border-red-100 text-red-700">
+                            <i class="fas fa-chart-line-down mr-3"></i> Decreasing Performance Trend
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Personalized Recommendations (Visual Left, Details Right) -->
+        <section class="glass-card rounded-xl p-6 bg-gradient-to-br from-beige to-white">
+            <h3 class="text-xl font-bold text-purple mb-6">6. AI-Generated Personalized Recommendations</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Left: Visual Roadmap Cards -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-purple text-center">
+                        <i class="fas fa-bolt text-2xl text-purple mb-2"></i>
+                        <h4 class="font-bold text-sm">Daily</h4>
+                        <p class="text-xs text-gray-500">Micro-quizzes & Revision</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-blue-500 text-center">
+                        <i class="fas fa-road text-2xl text-blue-500 mb-2"></i>
+                        <h4 class="font-bold text-sm">Path</h4>
+                        <p class="text-xs text-gray-500">Unlock Modules</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-green-500 text-center">
+                        <i class="fas fa-users text-2xl text-green-500 mb-2"></i>
+                        <h4 class="font-bold text-sm">Soft Skills</h4>
+                        <p class="text-xs text-gray-500">Group Activities</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-yellow-500 text-center">
+                        <i class="fas fa-file-contract text-2xl text-yellow-500 mb-2"></i>
+                        <h4 class="font-bold text-sm">Practice</h4>
+                        <p class="text-xs text-gray-500">Weak-topic packs</p>
+                    </div>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="space-y-5">
+                    <div>
+                        <h4 class="font-bold text-purple text-sm mb-1">6.1 Daily Recommendations</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>15-minute concept revision</li>
+                            <li>Micro-practice quizzes</li>
+                            <li>Short communication task</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600 text-sm mb-1">6.2 Learning Path</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>Structured roadmap based on performance pattern</li>
+                            <li>Progress-based unlocking of modules</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-green-600 text-sm mb-1">6.3 Behavioural & Soft Skills</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>Improve eye contact & speaking clarity</li>
+                            <li>Build confidence through mock interviews</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-purple text-white py-6 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm opacity-80">&copy; 2025 Spark AI Learning Reports.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Academic Bar Chart
+        new Chart(document.getElementById('academicBarChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Prog', 'Aptitude', 'Comm', 'Domain', 'Assign', 'Quiz'],
+                datasets: [{
+                    label: 'Score',
+                    data: [78, 60, 55, 75, 90, 65],
+                    backgroundColor: ['#674188', '#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#C3ACD0'],
+                    borderRadius: 4
+                }]
+            },
+            options: { plugins: { legend: { display: false } }, responsive: true, maintainAspectRatio: false }
+        });
+
+        // Academic Trend Chart
+        new Chart(document.getElementById('academicTrendChart'), {
+            type: 'line',
+            data: {
+                labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+                datasets: [{
+                    label: 'Trend',
+                    data: [60, 62, 65, 64, 70, 72, 75, 78],
+                    borderColor: '#674188',
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: { plugins: { legend: { display: false } }, responsive: true, maintainAspectRatio: false }
+        });
+    </script>
+</body>
+</html>
